@@ -6,7 +6,7 @@ import { NavBar } from "./navbar";
 export default function GeneralNavbar() {
   const router = useRouter();
 
-  const buttonsClassName = "font-semibold transition duration-300 hover:bg-amber-400";
+  const buttonsClassName = "font-semibold transition duration-300 hover:bg-gray-900";
 
   const navbarButtons = [
     {

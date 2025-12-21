@@ -1,38 +1,42 @@
 'use client'
+
+import { useRouter } from "next/navigation";
 import { NavBar } from "./navbar";
 
 export default function GeneralNavbar() {
+  const router = useRouter();
 
-    const buttonsClassName = "font-semibold transition duration-300 hover:bg-amber-400";
-    const navbarButtons = [
-        {
-            label: "Home",
-            action: () => alert("Clicked"),
-            className: buttonsClassName
-        },
-        {
-            label: "About",
-            action: () => alert("Clicked"),
-            className: buttonsClassName
-        },
-        {
-            label: "Changelogs",
-            action: () => alert("Clicked"),
-            className: buttonsClassName
-        },
-        {
-            label: "Contact",
-            action: () => alert("Clicked"),
-            className: buttonsClassName
-        },
-    ]
+  const buttonsClassName = "font-semibold transition duration-300 hover:bg-amber-400";
 
-    return (
-        <NavBar
-            image="icons/veroca.png"
-            title="Veroca"
-            className="bg-amber-500 text-white"
-            buttons={navbarButtons}
-        />
-    )
+  const navbarButtons = [
+    {
+      label: "Home",
+      action: () => router.push("/"),
+      className: buttonsClassName
+    },
+    {
+      label: "About",
+      action: () => router.push("/about"),
+      className: buttonsClassName
+    },
+    {
+      label: "Changelogs",
+      action: () => router.push("/changelogs"),
+      className: buttonsClassName
+    },
+    {
+      label: "Contact",
+      action: () => router.push("/contact"),
+      className: buttonsClassName
+    },
+  ];
+
+  return (
+    <NavBar
+      image="icons/veroca.png"
+      title="Veroca"
+      className="bg-amber-500 text-white"
+      buttons={navbarButtons}
+    />
+  );
 }

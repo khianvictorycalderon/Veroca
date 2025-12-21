@@ -2,6 +2,7 @@
 
 import GeneralNavbar from "../components/general-navbar"
 import { Hero } from "../components/hero"
+import LoginForm from "../sections/homepage/login-form"
 
 export default function HomePage() {
 
@@ -21,6 +22,7 @@ export default function HomePage() {
                 dark_cover_opacity={0.8}
                 cta_buttons={CTAButton}
             />
+            <LoginForm/>
         </>
     )
 }

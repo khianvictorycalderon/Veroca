@@ -13,8 +13,8 @@ export default async function Page() {
 
   return (
     <>
-      {session === "signed_in" && <HomePage/>}
-      {session === "signed_out" && <LoggedInHomePage/>}
+      {session === "signed_in" && <LoggedInHomePage/>}
+      {session === "signed_out" && <HomePage/>}
     </>
   );
 }

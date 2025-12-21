@@ -1,9 +1,11 @@
 'use client'
 
+import GeneralNavbar from "../components/general-navbar"
+
 export default function HomePage() {
     return (
         <>
-            <h1>Signed Out!</h1>
+            <GeneralNavbar/>
         </>
     )
 }

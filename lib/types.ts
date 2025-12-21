@@ -1,0 +1,1 @@
+export type HomeSessionType = "signed_in" | "signed_out";

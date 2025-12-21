@@ -12,11 +12,9 @@ export default async function Page() {
       : "signed_out";
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center bg-neutral-950 text-white">
-      <div className="text-center">
-        {session === "signed_in" && <HomePage/>}
-        {session === "signed_out" && <LoggedInHomePage/>}
-      </div>
-    </div>
+    <>
+      {session === "signed_in" && <HomePage/>}
+      {session === "signed_out" && <LoggedInHomePage/>}
+    </>
   );
 }

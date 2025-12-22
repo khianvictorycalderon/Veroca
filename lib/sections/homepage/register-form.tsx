@@ -1,43 +1,20 @@
 import { Input } from "@/lib/components/input-field";
 import SectionContainer from "@/lib/components/section-container";
 import { BaseText, HeadingText } from "@/lib/components/typography";
-import { HomeAccountSectionType } from "@/lib/types";
-import { HTMLInputTypeAttribute, SetStateAction } from "react";
+import { RegisterFieldProps, RegisterFormData, RegisterFormProps } from "@/lib/interfaces";
 import { FormProvider, useForm } from "react-hook-form";
-
-interface FormData {
-  first_name: string;
-  last_name: string;
-  username: string;
-  email: string;
-  birth_date: string;
-  password: string;
-  confirm_password: string;
-}
-
-interface FieldProps {
-  name?: string;
-  label?: string;
-  type?: HTMLInputTypeAttribute;
-  wrapper?: string;
-  pattern?: string;
-}
-
-interface RegisterFormProps {
-    setPage: React.Dispatch<SetStateAction<HomeAccountSectionType>>;
-}
 
 export default function RegisterForm({
     setPage
 }: RegisterFormProps) {
-    const methods = useForm<FormData>();
+    const methods = useForm<RegisterFormData>();
     const { handleSubmit } = methods;
 
-    const onSubmit = (data: FormData) => {
+    const onSubmit = (data: RegisterFormData) => {
         console.log(data);
     };
 
-    const fields: FieldProps[] = [
+    const fields: RegisterFieldProps[] = [
         { name: "first_name", label: "First Name" },
         { name: "last_name", label: "Last Name" },
         { name: "username", label: "Username" },

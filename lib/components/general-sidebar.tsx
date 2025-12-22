@@ -1,10 +1,5 @@
-import { SetStateAction } from "react";
+import { GeneralSideBarProps } from "../interfaces";
 import { SideBar } from "./sidebar";
-import { LoggedInPageType } from "../types";
-
-interface GeneralSideBarProps {
-    setPage: React.Dispatch<SetStateAction<LoggedInPageType>>;
-}
 
 export default function GeneralSideBar({
     setPage

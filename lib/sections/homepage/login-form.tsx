@@ -1,39 +1,21 @@
 import { Input } from "@/lib/components/input-field";
 import SectionContainer from "@/lib/components/section-container";
 import { BaseText, HeadingText } from "@/lib/components/typography";
-import { HomeAccountSectionType } from "@/lib/types";
-import { HTMLInputTypeAttribute, SetStateAction } from "react";
+import { LoginFieldProps, LoginFormData, LoginFormProps } from "@/lib/interfaces";
 import { FormProvider, useForm } from "react-hook-form";
-
-interface FormData {
-  username: string;
-  password: string;
-}
-
-interface FieldProps {
-  name?: string;
-  label?: string;
-  type?: HTMLInputTypeAttribute;
-  wrapper?: string;
-  pattern?: string;
-}
-
-interface LoginFormProps {
-    setPage: React.Dispatch<SetStateAction<HomeAccountSectionType>>;
-}
 
 export default function LoginForm({
     setPage
 }: LoginFormProps) {
 
-    const methods = useForm<FormData>();
+    const methods = useForm<LoginFormData>();
     const { handleSubmit } = methods;
 
-    const onSubmit = (data: FormData) => {
+    const onSubmit = (data: LoginFormData) => {
         console.log(data);
     };
 
-    const fields: FieldProps[] = [
+    const fields: LoginFieldProps[] = [
         { name: "login_username", label: "Username" },
         { name: "login_password", label: "Password", type: "password" },
     ];

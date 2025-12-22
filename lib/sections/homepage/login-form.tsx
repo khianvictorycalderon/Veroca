@@ -32,30 +32,34 @@ export default function LoginForm() {
     ];
 
     return (
-        <SectionContainer className="py-4 md:py-8 lg:py-16">
-            <HeadingText className="text-center text-neutral-800">Login your Account</HeadingText>
-            <FormProvider {...methods}>
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="text-neutral-950 grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4"
-                >
-                    {fields.map(field => (
-                        <div key={field.name} className={field?.wrapper ?? ""}>
-                            <Input {...field} />
-                        </div>
-                    ))}
+        <SectionContainer>
+            <div className="py-4 md:py-8 lg:py-16 min-h-[70vh] flex flex-col items-center justify-center">
+                <div className="w-full">
+                    <HeadingText className="text-center text-neutral-800">Login your Account</HeadingText>
+                    <FormProvider {...methods}>
+                        <form
+                            onSubmit={handleSubmit(onSubmit)}
+                            className="text-neutral-950 grid grid-cols-1 lg:grid-cols-2 mt-8 gap-4 flex-1 w-full"
+                        >
+                            {fields.map(field => (
+                                <div key={field.name} className={`w-full ${field?.wrapper}`}>
+                                    <Input {...field} />
+                                </div>
+                            ))}
 
-                    <div className="mt-4 lg:col-span-2 lg:mt-0">
-                    <Input
-                        type="submit"
-                        value="Login"
-                        additionalClassName={{
-                            input: "!bg-green-600 hover:!bg-green-500 cursor-pointer font-semibold !text-white transition duration-300",
-                        }}
-                    />
-                    </div>
-                </form>
-            </FormProvider>
+                            <div className="mt-4 lg:col-span-2 lg:mt-0">
+                            <Input
+                                type="submit"
+                                value="Login"
+                                additionalClassName={{
+                                    input: "!bg-green-600 hover:!bg-green-500 cursor-pointer font-semibold !text-white transition duration-300",
+                                }}
+                            />
+                            </div>
+                        </form>
+                    </FormProvider>
+                </div>
+            </div>
         </SectionContainer>
     )
 }

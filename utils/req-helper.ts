@@ -1,26 +1,34 @@
-'use client';
+import { SetStateAction } from "react";
+import axios from "axios";
 
-// This is a client component only!
 export const handleAPIRequest = async <T>(
   action: () => Promise<T>,
   errMessage: string,
+  setErrorMessage: React.Dispatch<SetStateAction<string>>,
   errAction: () => Promise<void> = async () => {},
   finalAction: () => Promise<void> = async () => {}
 ): Promise<T | undefined> => {
   try {
     return await action();
   } catch (err: unknown) {
-    const message =
-      err instanceof Error
-        ? `${errMessage}: ${err.message}`
-        : `${errMessage}: ${String(err)}`;
+    let message = "";
 
-    if (process.env.NODE_ENV === "development") {
-        // Only show logs on development only
-        alert(message);
-        console.error(message);
+    if (axios.isAxiosError(err)) {
+      message = err.response?.data?.message
+        ? `${errMessage}: ${err.response.data.message}`
+        : `${errMessage}: ${err.message}`;
+    } else if (err instanceof Error) {
+      message = `${errMessage}: ${err.message}`;
+    } else {
+      message = `${errMessage}: ${String(err)}`;
     }
 
+    if (process.env.NODE_ENV === "development") {
+      alert(message);
+      console.error(message);
+    }
+
+    setErrorMessage(message);
     await errAction();
     return undefined;
 
@@ -28,6 +36,7 @@ export const handleAPIRequest = async <T>(
     await finalAction();
   }
 };
+
 
 /*
   Example Usage 1:
@@ -39,9 +48,10 @@ export const handleAPIRequest = async <T>(
                 setUsers(res.data.users);
             },
             "Unable to fetch users",
-            async () => {},
+            setError, // <-- pass your setState function
+            async () => {}, // optional errAction
             async () => {
-                setIsFetching(false);
+                setIsFetching(false); // optional finalAction
             }
         );
      }
@@ -57,6 +67,7 @@ export const handleAPIRequest = async <T>(
                 setUsers(res.data.users);
             },
             "Unable to fetch users",
+            setError, // <-- pass your setState function
             async () => {},
             async () => {
                 setIsFetching(false);
@@ -65,4 +76,26 @@ export const handleAPIRequest = async <T>(
      fetchAllUsers();
   },[]);
 
+  Example Usage 3: Login Form Submission
+  const onSubmit = (data: LoginFormData) => {
+      setIsSubmitting(true);
+      handleAPIRequest(
+          async () => {
+              const res = await axios.post("/api/login", {
+                  username: data.login_username,
+                  password: data.login_password,
+              });
+              console.log("Login successful:", res.data);
+              setPage("dashboard"); // navigate or update UI
+          },
+          "Unable to login",
+          setError, // <-- pass your setError state setter
+          async (message: string) => {
+              console.log("Optional additional error handling:", message);
+          },
+          async () => {
+              setIsSubmitting(false); // finalAction
+          }
+      );
+  };
 */

@@ -4,6 +4,9 @@ import { Input } from "@/lib/components/input-field";
 import SectionContainer from "@/lib/components/section-container";
 import { BaseText, HeadingText } from "@/lib/components/typography";
 import { LoginFieldProps, LoginFormData, LoginFormProps } from "@/lib/interfaces";
+import { handleAPIRequest } from "@/utils/req-helper";
+import axios from "axios";
+import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 export default function LoginForm({
@@ -12,13 +15,31 @@ export default function LoginForm({
     const methods = useForm<LoginFormData>();
     const { handleSubmit } = methods;
 
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
+
     const onSubmit = (data: LoginFormData) => {
-        console.log(data);
+        handleAPIRequest(
+            async () => {
+                await axios.post("/api/login", {
+                    username: data.username,
+                    password: data.password
+                }, {
+                    withCredentials: true
+                });
+            }, 
+            "Failed to login",
+            setErrorMessage,
+            async () => {},
+            async () => {
+                setIsSubmitting(false);
+            }
+        );
     };
 
     const fields: LoginFieldProps[] = [
-        { name: "login_username", label: "Username" },
-        { name: "login_password", label: "Password", type: "password" },
+        { name: "username", label: "Username" },
+        { name: "password", label: "Password", type: "password" },
     ];
 
     return (
@@ -48,6 +69,7 @@ export default function LoginForm({
                             </div>
                         </form>
                     </FormProvider>
+                    {errorMessage && <BaseText className="text-center mt-4 text-red-400">{errorMessage}</BaseText>}
                     <BaseText className="mt-4 text-right">No Account? <button onClick={() => setPage("register")} className="text-blue-600 underline cursor-pointer">Create One</button></BaseText>
                 </div>
             </div>

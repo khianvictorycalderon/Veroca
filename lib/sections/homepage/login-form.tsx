@@ -19,6 +19,8 @@ export default function LoginForm({
     const [errorMessage, setErrorMessage] = useState<string>("");
 
     const onSubmit = (data: LoginFormData) => {
+        setIsSubmitting(true);
+
         handleAPIRequest(
             async () => {
                 await axios.post("/api/login", {
@@ -27,6 +29,7 @@ export default function LoginForm({
                 }, {
                     withCredentials: true
                 });
+                window.location.reload(); // Refresh for the login session
             }, 
             "Failed to login",
             setErrorMessage,
@@ -54,16 +57,19 @@ export default function LoginForm({
                         >
                             {fields.map(field => (
                                 <div key={field.name} className={`w-full ${field?.wrapper}`}>
-                                    <Input {...field} />
+                                    <Input additionalClassName={{
+                                        input: "disabled:!text-gray-400 disabled:!bg-gray-300"
+                                    }} disabled={isSubmitting} {...field} />
                                 </div>
                             ))}
 
                             <div className="mt-4 lg:col-span-2 lg:mt-0">
                             <Input
+                                disabled={isSubmitting}
                                 type="submit"
                                 value="Login"
                                 additionalClassName={{
-                                    input: "!bg-green-600 hover:!bg-green-500 cursor-pointer font-semibold !text-white transition duration-300",
+                                    input: "disabled:!text-gray-400 disabled:!bg-gray-300 !bg-green-600 hover:!bg-green-500 cursor-pointer font-semibold !text-white transition duration-300",
                                 }}
                             />
                             </div>

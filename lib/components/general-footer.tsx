@@ -15,19 +15,31 @@ export default function GeneralFooter() {
             logo="icons/Khian_Icon_Logo.png"
             texts={[
                 {
+                    title: "Veroca Developed by",
+                    content: (
+                        <ul className={sectionClassName}>
+                            <li>
+                                <a href="https://khian.netlify.app" target="_blank" title="Developer's Official Website" className="hover:text-white">
+                                    Khian Victory D. Calderon
+                                </a>
+                            </li>
+                        </ul>
+                    ),
+                },
+                {
                     title: "Legal",
                     content: (
                         <ul className={sectionClassName}>
-                        <li>
-                            <a onClick={() => router.push("/privacy-policy")} className="hover:text-white">
-                                Privacy Policy
-                            </a>
-                        </li>
-                        <li>
-                            <a onClick={() => router.push("/terms-of-service")} className="hover:text-white">
-                                Terms of Service
-                            </a>
-                        </li>
+                            <li>
+                                <a onClick={() => router.push("/privacy-policy")} className="hover:text-white">
+                                    Privacy Policy
+                                </a>
+                            </li>
+                            <li>
+                                <a onClick={() => router.push("/terms-of-service")} className="hover:text-white">
+                                    Terms of Service
+                                </a>
+                            </li>
                         </ul>
                     ),
                 },

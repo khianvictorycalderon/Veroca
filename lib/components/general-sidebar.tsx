@@ -1,9 +1,29 @@
+'use client'
+
+import { handleAPIRequest } from "@/utils/req-helper";
 import { GeneralSideBarProps } from "../interfaces";
 import { SideBar } from "./sidebar";
+import axios from "axios";
 
 export default function GeneralSideBar({
     setPage
 }: GeneralSideBarProps) {
+
+    const logout = async() => {
+        handleAPIRequest(
+          async () => {
+              const res = await axios.delete("/api/logout");
+              console.log("Logout successful:", res.data);
+              window.location.reload();
+          },
+          "Unable to logout",
+          
+          // Blank expressions
+          () => {},
+          async () => {},
+          async () => {}
+      );
+    }
 
     const buttons = [
         {
@@ -20,7 +40,7 @@ export default function GeneralSideBar({
         },
         {
             label: "Log Out",
-            action: () => alert("Logged Out!")
+            action: logout
         },
     ]
 

@@ -1,3 +1,5 @@
+'use client'
+
 import { Input } from "@/lib/components/input-field";
 import SectionContainer from "@/lib/components/section-container";
 import { BaseText, HeadingText } from "@/lib/components/typography";
@@ -7,7 +9,6 @@ import { FormProvider, useForm } from "react-hook-form";
 export default function LoginForm({
     setPage
 }: LoginFormProps) {
-
     const methods = useForm<LoginFormData>();
     const { handleSubmit } = methods;
 

@@ -67,6 +67,12 @@ export interface AccountManagementFormData {
   birth_date: string;
 }
 
+export interface AccountManagementPasswordFormData {
+  old_password: string;
+  new_password: string;
+  confirm_password: string;
+}
+
 export interface AccountManagementFieldProps {
   name?: string;
   label?: string;

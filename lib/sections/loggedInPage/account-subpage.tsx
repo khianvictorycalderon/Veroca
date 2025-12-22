@@ -53,7 +53,7 @@ export default function AccountSubPage() {
                             {fields.map(field => (
                                 <div key={field.name} className={`w-full ${field?.wrapper}`}>
                                     <Input additionalClassName={{
-                                        input: "disabled:!text-gray-400 disabled:!bg-gray-300"
+                                        input: "disabled:!text-neutral-950 disabled:!bg-gray-300 bg-gray-200 focus:ring-2 focus:ring-blue-600"
                                     }} disabled={!isEditing} {...field} />
                                 </div>
                             ))}

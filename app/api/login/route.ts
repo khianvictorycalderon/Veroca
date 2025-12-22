@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
             value: sampleUserID,
             path: "/",
             httpOnly: true,
-            maxAge: 60,
+            maxAge: 3600,
             sameSite: "lax"
         });
 

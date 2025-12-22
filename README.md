@@ -20,6 +20,7 @@ This section is provided for reference only, to give you insight into how the pr
 - `npm install pg`
 - `npm install --save-dev @types/pg`
 - `npm install axios`
+- `npm install react-icons`
 - `npm install react-hook-form`
 - `npm install dotenv`
 - `npm install zod`

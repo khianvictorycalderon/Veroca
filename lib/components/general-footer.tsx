@@ -15,8 +15,8 @@ export default function GeneralFooter() {
             logo="icons/Khian_Icon_Logo.png"
             texts={[
                 {
-                title: "Legal",
-                content: (
+                    title: "Legal",
+                    content: (
                         <ul className={sectionClassName}>
                         <li>
                             <a onClick={() => router.push("/privacy-policy")} className="hover:text-white">

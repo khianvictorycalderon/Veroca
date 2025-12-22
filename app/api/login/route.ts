@@ -8,13 +8,15 @@ export async function POST(request: NextRequest) {
     dev.log(`Username: ${username}`);
     dev.log(`Password: ${password}`);
 
+    const sampleUserID = "e7dvm-3idms-39wmx-3mskv";
+
     if (username === "admin" && password == "1234") {
         const response = NextResponse.json({ message: "Login Successful!" }, { status: 200 })
 
         // Set cookie
         response.cookies.set({
-            name: "session",
-            value: "signed_in",
+            name: "signed_in_user",
+            value: sampleUserID,
             path: "/",
             httpOnly: true,
             maxAge: 60,

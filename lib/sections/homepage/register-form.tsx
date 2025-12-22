@@ -1,7 +1,8 @@
 import { Input } from "@/lib/components/input-field";
 import SectionContainer from "@/lib/components/section-container";
-import { HeadingText } from "@/lib/components/typography";
-import { HTMLInputTypeAttribute } from "react";
+import { BaseText, HeadingText } from "@/lib/components/typography";
+import { HomeAccountSection, HomeSessionType } from "@/lib/types";
+import { HTMLInputTypeAttribute, SetStateAction } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 interface FormData {
@@ -22,7 +23,13 @@ interface FieldProps {
   pattern?: string;
 }
 
-export default function RegisterForm() {
+interface RegisterFormProps {
+    setPage: React.Dispatch<SetStateAction<HomeAccountSection>>;
+}
+
+export default function RegisterForm({
+    setPage
+}: RegisterFormProps) {
     const methods = useForm<FormData>();
     const { handleSubmit } = methods;
 
@@ -67,6 +74,7 @@ export default function RegisterForm() {
                             </div>
                         </form>
                     </FormProvider>
+                    <BaseText className="mt-4 text-right">Already have an Account? <button onClick={() => setPage("login")} className="text-blue-600 underline cursor-pointer">Sign-In</button></BaseText>
                 </div>
             </div>
         </SectionContainer>

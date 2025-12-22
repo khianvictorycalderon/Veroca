@@ -9,7 +9,7 @@ import RegisterForm from "../sections/homepage/register-form"
 
 export default function HomePage() {
 
-    const [accountSection, setAccountSection] = useState<HomeAccountSection>("register");
+    const [accountSection, setAccountSection] = useState<HomeAccountSection>("login");
 
     const CTAButton = [
         <button className="text-lg md:text-xl lg:text-2xl font-bold bg-green-600 px-6 py-2 rounded-md shadow hover:bg-green-500 transition duration-300 cursor-pointer">
@@ -27,8 +27,8 @@ export default function HomePage() {
                 dark_cover_opacity={0.8}
                 cta_buttons={CTAButton}
             />
-            {accountSection == "login" && <LoginForm/>}
-            {accountSection == "register" && <RegisterForm/>}
+            {accountSection == "login" && <LoginForm setPage={setAccountSection}/>}
+            {accountSection == "register" && <RegisterForm setPage={setAccountSection}/>}
         </>
     )
 }

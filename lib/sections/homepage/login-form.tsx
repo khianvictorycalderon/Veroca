@@ -1,7 +1,8 @@
 import { Input } from "@/lib/components/input-field";
 import SectionContainer from "@/lib/components/section-container";
-import { HeadingText } from "@/lib/components/typography";
-import { HTMLInputTypeAttribute } from "react";
+import { BaseText, HeadingText } from "@/lib/components/typography";
+import { HomeAccountSection } from "@/lib/types";
+import { HTMLInputTypeAttribute, SetStateAction } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 interface FormData {
@@ -17,7 +18,13 @@ interface FieldProps {
   pattern?: string;
 }
 
-export default function LoginForm() {
+interface LoginFormProps {
+    setPage: React.Dispatch<SetStateAction<HomeAccountSection>>;
+}
+
+export default function LoginForm({
+    setPage
+}: LoginFormProps) {
 
     const methods = useForm<FormData>();
     const { handleSubmit } = methods;
@@ -58,6 +65,7 @@ export default function LoginForm() {
                             </div>
                         </form>
                     </FormProvider>
+                    <BaseText className="mt-4 text-right">No Account? <button onClick={() => setPage("register")} className="text-blue-600 underline cursor-pointer">Create One</button></BaseText>
                 </div>
             </div>
         </SectionContainer>

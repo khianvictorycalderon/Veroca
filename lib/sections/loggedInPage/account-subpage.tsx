@@ -1,4 +1,5 @@
 'use client'
+import GeneralFooter from "@/lib/components/general-footer";
 import { Input } from "@/lib/components/input-field";
 import SectionContainer from "@/lib/components/section-container";
 import { HeadingText } from "@/lib/components/typography";
@@ -65,90 +66,94 @@ export default function AccountSubPage() {
     // ---------------------------------------------------------
 
     return (
-        <SectionContainer className="bg-gray-50">
-            
-            <div className="py-4 md:py-8 lg:py-16 min-h-[100vh] flex flex-col items-center justify-center gap-16">
+        <>
+            <SectionContainer className="bg-gray-50">
                 
-                <div className="w-full">
-                    <HeadingText className="text-center text-neutral-800">Manage your Account</HeadingText>
-                    <FormProvider {...accountMethods}>
-                        <form
-                            onSubmit={handleSubmit(onSave)}
-                            className="text-neutral-950 grid grid-cols-1 lg:grid-cols-2 mt-8 gap-4 flex-1 w-full"
-                        >
-                            {fields.map(field => (
-                                <div key={field.name} className={`w-full ${field?.wrapper}`}>
-                                    <Input additionalClassName={{
-                                        input: "disabled:!text-neutral-950 disabled:!bg-gray-300 bg-gray-200 focus:ring-2 focus:ring-blue-600"
-                                    }} disabled={!isEditing} {...field} />
-                                </div>
-                            ))}
+                <div className="py-4 md:py-8 lg:py-16 min-h-[100vh] flex flex-col items-center justify-center gap-16">
+                    
+                    <div className="w-full">
+                        <HeadingText className="text-center text-neutral-800">Manage your Account</HeadingText>
+                        <FormProvider {...accountMethods}>
+                            <form
+                                onSubmit={handleSubmit(onSave)}
+                                className="text-neutral-950 grid grid-cols-1 lg:grid-cols-2 mt-8 gap-4 flex-1 w-full"
+                            >
+                                {fields.map(field => (
+                                    <div key={field.name} className={`w-full ${field?.wrapper}`}>
+                                        <Input additionalClassName={{
+                                            input: "disabled:!text-neutral-950 disabled:!bg-gray-300 bg-gray-200 focus:ring-2 focus:ring-blue-600"
+                                        }} disabled={!isEditing} {...field} />
+                                    </div>
+                                ))}
 
-                            {isEditing ? (
-                                <div className="mt-4 lg:col-span-2 lg:mt-0 grid grid-cols-2 gap-4">
+                                {isEditing ? (
+                                    <div className="mt-4 lg:col-span-2 lg:mt-0 grid grid-cols-2 gap-4">
+                                        <Input
+                                            type="submit"
+                                            value="Save"
+                                            additionalClassName={{
+                                                input: "disabled:!text-gray-400 disabled:!bg-gray-300 !bg-green-600 hover:!bg-green-500 cursor-pointer font-semibold !text-white transition duration-300",
+                                            }}
+                                        />
+                                        <button
+                                            type="button"
+                                            value="Cancel"
+                                            className="disabled:!text-gray-400 disabled:!bg-gray-300 !bg-red-600 hover:!bg-red-500 cursor-pointer font-semibold !text-white transition duration-300 py-2 rounded-md"
+                                            onClick={onCancel}
+                                        >Cancel</button>
+                                    </div>
+                                ) : (
+                                    <div className="mt-4 lg:col-span-2 lg:mt-0 grid grid-cols-1 gap-4">
+                                        <button
+                                            className="disabled:!text-gray-400 disabled:!bg-gray-300 !bg-blue-600 hover:!bg-blue-500 cursor-pointer font-semibold !text-white transition duration-300 py-2 rounded-md"
+                                            onClick={() => setIsEditing(true)}
+                                        >Edit</button>
+                                    </div>
+                                )}
+                            </form>
+                        </FormProvider>
+                    </div>
+
+                    <div className="w-full">
+                        <HeadingText className="text-center text-neutral-800">Change Password</HeadingText>
+                        <FormProvider {...passwordMethods}>
+                            <form
+                                onSubmit={handlePasswordSubmit(onChangePassword)}
+                                className="text-neutral-950 grid grid-cols-1 lg:grid-cols-2 mt-8 gap-4 flex-1 w-full"
+                            >
+                                {[
+                                    { name: "old_password", label: "Old Password", type: "password" },
+                                    { name: "new_password", label: "New Password", type: "password" },
+                                    { name: "confirm_password", label: "Confirm New Password", type: "password" },
+                                ].map(field => (
+                                    <div key={field.name} className="w-full">
+                                        <Input
+                                            additionalClassName={{
+                                                input: "bg-gray-200 focus:ring-2 focus:ring-blue-600"
+                                            }}
+                                            {...field}
+                                        />
+                                    </div>
+                                ))}
+
+                                <div className="mt-4 lg:col-span-2 grid grid-cols-1 gap-4">
                                     <Input
                                         type="submit"
-                                        value="Save"
+                                        value="Update Password"
                                         additionalClassName={{
-                                            input: "disabled:!text-gray-400 disabled:!bg-gray-300 !bg-green-600 hover:!bg-green-500 cursor-pointer font-semibold !text-white transition duration-300",
+                                            input: "!bg-green-600 hover:!bg-green-500 cursor-pointer font-semibold !text-white transition duration-300",
                                         }}
                                     />
-                                    <button
-                                        type="button"
-                                        value="Cancel"
-                                        className="disabled:!text-gray-400 disabled:!bg-gray-300 !bg-red-600 hover:!bg-red-500 cursor-pointer font-semibold !text-white transition duration-300 py-2 rounded-md"
-                                        onClick={onCancel}
-                                    >Cancel</button>
                                 </div>
-                            ) : (
-                                <div className="mt-4 lg:col-span-2 lg:mt-0 grid grid-cols-1 gap-4">
-                                    <button
-                                        className="disabled:!text-gray-400 disabled:!bg-gray-300 !bg-blue-600 hover:!bg-blue-500 cursor-pointer font-semibold !text-white transition duration-300 py-2 rounded-md"
-                                        onClick={() => setIsEditing(true)}
-                                    >Edit</button>
-                                </div>
-                            )}
-                        </form>
-                    </FormProvider>
+                            </form>
+                        </FormProvider>
+                    </div>
+                    
                 </div>
 
-                <div className="w-full">
-                    <HeadingText className="text-center text-neutral-800">Change Password</HeadingText>
-                    <FormProvider {...passwordMethods}>
-                        <form
-                            onSubmit={handlePasswordSubmit(onChangePassword)}
-                            className="text-neutral-950 grid grid-cols-1 lg:grid-cols-2 mt-8 gap-4 flex-1 w-full"
-                        >
-                            {[
-                                { name: "old_password", label: "Old Password", type: "password" },
-                                { name: "new_password", label: "New Password", type: "password" },
-                                { name: "confirm_password", label: "Confirm New Password", type: "password" },
-                            ].map(field => (
-                                <div key={field.name} className="w-full">
-                                    <Input
-                                        additionalClassName={{
-                                            input: "bg-gray-200 focus:ring-2 focus:ring-blue-600"
-                                        }}
-                                        {...field}
-                                    />
-                                </div>
-                            ))}
+            </SectionContainer>
 
-                            <div className="mt-4 lg:col-span-2 grid grid-cols-1 gap-4">
-                                <Input
-                                    type="submit"
-                                    value="Update Password"
-                                    additionalClassName={{
-                                        input: "!bg-green-600 hover:!bg-green-500 cursor-pointer font-semibold !text-white transition duration-300",
-                                    }}
-                                />
-                            </div>
-                        </form>
-                    </FormProvider>
-                </div>
-                
-            </div>
-
-        </SectionContainer>
+            <GeneralFooter/>
+        </>
     )
 }

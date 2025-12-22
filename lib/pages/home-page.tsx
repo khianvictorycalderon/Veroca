@@ -6,6 +6,7 @@ import { Hero } from "../components/hero"
 import LoginForm from "../sections/homepage/login-form"
 import { HomeAccountSectionType } from "../types"
 import RegisterForm from "../sections/homepage/register-form"
+import GeneralFooter from "../components/general-footer"
 
 export default function HomePage() {
 
@@ -29,6 +30,7 @@ export default function HomePage() {
             />
             {accountSection == "login" && <LoginForm setPage={setAccountSection}/>}
             {accountSection == "register" && <RegisterForm setPage={setAccountSection}/>}
+            <GeneralFooter/>
         </>
     )
 }

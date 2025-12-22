@@ -1,0 +1,37 @@
+'use client'
+
+import { useRouter } from "next/navigation";
+import Footer from "./footer";
+
+export default function GeneralFooter() {
+
+    const router = useRouter();
+    const sectionClassName = "space-y-4 [&_li]:cursor-pointer [&_li_a]:transition [&_li_a]:duration-300";
+    
+    return (
+        <Footer
+            
+            className="!bg-gray-900 !border-none"
+            logo="icons/Khian_Icon_Logo.png"
+            texts={[
+                {
+                title: "Legal",
+                content: (
+                        <ul className={sectionClassName}>
+                        <li>
+                            <a onClick={() => router.push("/privacy-policy")} className="hover:text-white">
+                                Privacy Policy
+                            </a>
+                        </li>
+                        <li>
+                            <a onClick={() => router.push("/terms-of-service")} className="hover:text-white">
+                                Terms of Service
+                            </a>
+                        </li>
+                        </ul>
+                    ),
+                },
+            ]}
+        />
+    )
+}

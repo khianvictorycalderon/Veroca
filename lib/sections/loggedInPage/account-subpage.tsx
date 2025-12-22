@@ -45,44 +45,45 @@ export default function AccountSubPage() {
                 
                 <div className="w-full">
                     <HeadingText className="text-center text-neutral-800">Manage your Account</HeadingText>
-                    {isEditing ? (
-                        <FormProvider {...methods}>
-                            <form
-                                onSubmit={handleSubmit(onSave)}
-                                className="text-neutral-950 grid grid-cols-1 lg:grid-cols-2 mt-8 gap-4 flex-1 w-full"
-                            >
-                                {fields.map(field => (
-                                    <div key={field.name} className={`w-full ${field?.wrapper}`}>
-                                        <Input additionalClassName={{
-                                            input: "disabled:!text-gray-400 disabled:!bg-gray-300"
-                                        }} disabled={!isEditing} {...field} />
-                                    </div>
-                                ))}
+                    <FormProvider {...methods}>
+                        <form
+                            onSubmit={handleSubmit(onSave)}
+                            className="text-neutral-950 grid grid-cols-1 lg:grid-cols-2 mt-8 gap-4 flex-1 w-full"
+                        >
+                            {fields.map(field => (
+                                <div key={field.name} className={`w-full ${field?.wrapper}`}>
+                                    <Input additionalClassName={{
+                                        input: "disabled:!text-gray-400 disabled:!bg-gray-300"
+                                    }} disabled={!isEditing} {...field} />
+                                </div>
+                            ))}
 
+                            {isEditing ? (
                                 <div className="mt-4 lg:col-span-2 lg:mt-0 grid grid-cols-2 gap-4">
                                     <Input
                                         type="submit"
                                         value="Save"
                                         additionalClassName={{
-                                            input: "!flex-1 disabled:!text-gray-400 disabled:!bg-gray-300 !bg-green-600 hover:!bg-green-500 cursor-pointer font-semibold !text-white transition duration-300",
+                                            input: "disabled:!text-gray-400 disabled:!bg-gray-300 !bg-green-600 hover:!bg-green-500 cursor-pointer font-semibold !text-white transition duration-300",
                                         }}
                                     />
-                                    <Input
+                                    <button
                                         type="button"
                                         value="Cancel"
-                                        additionalClassName={{
-                                            input: "!flex-1 disabled:!text-gray-400 disabled:!bg-gray-300 !bg-red-600 hover:!bg-red-500 cursor-pointer font-semibold !text-white transition duration-300",
-                                        }}
+                                        className="disabled:!text-gray-400 disabled:!bg-gray-300 !bg-red-600 hover:!bg-red-500 cursor-pointer font-semibold !text-white transition duration-300 py-2 rounded-md"
                                         onClick={onCancel}
-                                    />
+                                    >Cancel</button>
                                 </div>
-                            </form>
-                        </FormProvider>
-                    ) : (
-                        <>
-                            <button onClick={() => setIsEditing(true)}>Edit your data</button>
-                        </>
-                    )}
+                            ) : (
+                                <div className="mt-4 lg:col-span-2 lg:mt-0 grid grid-cols-1 gap-4">
+                                    <button
+                                        className="disabled:!text-gray-400 disabled:!bg-gray-300 !bg-blue-600 hover:!bg-blue-500 cursor-pointer font-semibold !text-white transition duration-300 py-2 rounded-md"
+                                        onClick={() => setIsEditing(true)}
+                                    >Edit</button>
+                                </div>
+                            )}
+                        </form>
+                    </FormProvider>
                 </div>
                 
             </div>

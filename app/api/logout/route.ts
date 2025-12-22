@@ -14,7 +14,7 @@ export async function DELETE() {
             
             return response;
         },
-        "Failed to fetch data"
+        "Failed to logout"
     );
 
 }

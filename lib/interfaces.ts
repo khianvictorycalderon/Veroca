@@ -56,3 +56,22 @@ export interface GeneralSideBarProps {
 }
 
 // -------------------------------------------------------------
+
+// -------------------------------------------------------------
+// Account Management interface
+export interface AccountManagementFormData {
+  first_name: string;
+  last_name: string;
+  username: string;
+  email: string;
+  birth_date: string;
+}
+
+export interface AccountManagementFieldProps {
+  name?: string;
+  label?: string;
+  type?: HTMLInputTypeAttribute;
+  wrapper?: string;
+  pattern?: string;
+}
+// -------------------------------------------------------------

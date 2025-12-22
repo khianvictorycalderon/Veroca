@@ -1,7 +1,7 @@
 import { Input } from "@/lib/components/input-field";
 import SectionContainer from "@/lib/components/section-container";
 import { BaseText, HeadingText } from "@/lib/components/typography";
-import { HomeAccountSection } from "@/lib/types";
+import { HomeAccountSectionType } from "@/lib/types";
 import { HTMLInputTypeAttribute, SetStateAction } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -19,7 +19,7 @@ interface FieldProps {
 }
 
 interface LoginFormProps {
-    setPage: React.Dispatch<SetStateAction<HomeAccountSection>>;
+    setPage: React.Dispatch<SetStateAction<HomeAccountSectionType>>;
 }
 
 export default function LoginForm({

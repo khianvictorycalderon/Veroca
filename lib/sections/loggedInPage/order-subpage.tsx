@@ -257,21 +257,40 @@ export default function OrderSubPage() {
                     <div className="mt-8">
                         {filteredOrders.length > 0 ? (
                             <div className="flex flex-col gap-2">
-                                {filteredOrders.map((item, index) => (
-                                    <button
-                                        key={`${item.name}-${index}`}
-                                        onClick={() => setCurrentSelectedOrder(item)}
-                                        className="w-full text-left py-2 px-2 transition duration-300 cursor-pointer rounded-md hover:bg-gray-600"
-                                    >
-                                        {truncateText(item.name, 35)}
-                                    </button>
-                                ))}
+                                {filteredOrders.map((item, index) => {
+                                    const isSelected = currentSelectedOrder?.id === item.id;
+                                    return (
+                                        <div
+                                            key={`${item.name}-${index}`}
+                                            className={`flex justify-between items-center w-full py-2 px-2 rounded-md transition duration-300
+                                                ${isSelected ? "bg-neutral-600 text-white" : "hover:bg-gray-600"}`}
+                                        >
+                                            <button
+                                                onClick={() => setCurrentSelectedOrder(item)}
+                                                className="text-left flex-1 cursor-pointer"
+                                            >
+                                                {truncateText(item.name, 35)}
+                                            </button>
+                                            <button
+                                                onClick={() => {
+                                                    setOrderItems(prev => prev.filter(order => order.id !== item.id));
+                                                    if (currentSelectedOrder?.id === item.id) {
+                                                        setCurrentSelectedOrder(null);
+                                                        setCurrentCustomers([]);
+                                                    }
+                                                }}
+                                                className="ml-2 text-red-500 hover:text-red-700 cursor-pointer"
+                                            >
+                                                <TiDelete size={20} />
+                                            </button>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         ) : (
                             <BaseText className="text-center">No orders found.</BaseText>
                         )}
                     </div>
-
 
                 </div>
             </div>

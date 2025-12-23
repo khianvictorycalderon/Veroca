@@ -26,59 +26,165 @@ export default function OrderSubPage() {
     const [orderItems, setOrderItems] = useState<OrderManagementOrderListProps[]>([
         {
             id: "ORD001",
-            name: "BBQ Stick - Tomorrow",
+            name: "Pancake - Tomorrow",
             details: [
-                { customer_name: "John Doe", quantity: 2, remarks: "Bring tomorrow" },
-                { customer_name: "Jane Smith", quantity: 3, remarks: "Extra sauce" },
-            ]
+            { customer_name: "John Doe", quantity: 2, remarks: "Bring tomorrow" },
+            { customer_name: "Jane Smith", quantity: 3, remarks: "Extra syrup" },
+            ],
         },
         {
             id: "ORD002",
-            name: "BBQ Stick - Next Week",
+            name: "Waffles - Tomorrow",
             details: [
-                { customer_name: "Alice Tan", quantity: 1, remarks: "" },
-                { customer_name: "Bob Lee", quantity: 2, remarks: "No onions" },
-            ]
+            { customer_name: "Alice Tan", quantity: 1, remarks: "" },
+            { customer_name: "Bob Lee", quantity: 2, remarks: "No nuts" },
+            { customer_name: "Clara Reyes", quantity: 2, remarks: "Urgent" },
+            ],
         },
         {
             id: "ORD003",
-            name: "Pancake - 12/25/2025",
+            name: "Omelette - Tomorrow",
             details: [
-                { customer_name: "Clara Reyes", quantity: 3, remarks: "Christmas special" },
-                { customer_name: "David Lim", quantity: 1, remarks: "" },
-            ]
+            { customer_name: "David Lim", quantity: 3, remarks: "Extra cheese" },
+            { customer_name: "Eva Santos", quantity: 1, remarks: "" },
+            ],
         },
         {
             id: "ORD004",
-            name: "Baby Powder - 1/24/2026",
+            name: "French Toast - 12/25/2025",
             details: [
-                { customer_name: "Eva Santos", quantity: 2, remarks: "Gift order" },
-                { customer_name: "John Doe", quantity: 1, remarks: "" },
-            ]
+            { customer_name: "John Doe", quantity: 2, remarks: "Bring tomorrow" },
+            { customer_name: "Alice Tan", quantity: 2, remarks: "" },
+            { customer_name: "Bob Lee", quantity: 1, remarks: "Special request" },
+            ],
         },
         {
             id: "ORD005",
-            name: "Waffles - Tomorrow",
+            name: "BBQ Stick - Next Week",
             details: [
-                { customer_name: "Jane Smith", quantity: 4, remarks: "" },
-                { customer_name: "Bob Lee", quantity: 2, remarks: "Urgent" },
-            ]
+            { customer_name: "Jane Smith", quantity: 4, remarks: "Already paid" },
+            { customer_name: "Clara Reyes", quantity: 3, remarks: "Pending payment" },
+            ],
         },
         {
             id: "ORD006",
             name: "Chocolate Cake - 12/31/2025",
             details: [
-                { customer_name: "David Lim", quantity: 1, remarks: "Birthday" },
-                { customer_name: "Alice Tan", quantity: 2, remarks: "" },
-            ]
+            { customer_name: "David Lim", quantity: 1, remarks: "Birthday" },
+            { customer_name: "Alice Tan", quantity: 2, remarks: "" },
+            ],
         },
         {
             id: "ORD007",
             name: "Fruit Juice - Next Week",
             details: [
-                { customer_name: "Clara Reyes", quantity: 3, remarks: "" },
-                { customer_name: "Eva Santos", quantity: 2, remarks: "Bring cold" },
-            ]
+            { customer_name: "Clara Reyes", quantity: 3, remarks: "" },
+            { customer_name: "Eva Santos", quantity: 2, remarks: "Bring cold" },
+            ],
+        },
+        {
+            id: "ORD008",
+            name: "Pancake - 12/26/2025",
+            details: [
+            { customer_name: "John Doe", quantity: 1, remarks: "Allergy: nuts" },
+            { customer_name: "David Lim", quantity: 2, remarks: "" },
+            ],
+        },
+        {
+            id: "ORD009",
+            name: "Waffles - 12/27/2025",
+            details: [
+            { customer_name: "Alice Tan", quantity: 3, remarks: "" },
+            { customer_name: "Eva Santos", quantity: 1, remarks: "Urgent" },
+            ],
+        },
+        {
+            id: "ORD010",
+            name: "Omelette - 12/28/2025",
+            details: [
+            { customer_name: "Jane Smith", quantity: 2, remarks: "Extra cheese" },
+            { customer_name: "Clara Reyes", quantity: 1, remarks: "" },
+            ],
+        },
+        {
+            id: "ORD011",
+            name: "French Toast - 12/29/2025",
+            details: [
+            { customer_name: "John Doe", quantity: 2, remarks: "Bring tomorrow" },
+            { customer_name: "Alice Tan", quantity: 1, remarks: "" },
+            ],
+        },
+        {
+            id: "ORD012",
+            name: "BBQ Stick - 1/2/2026",
+            details: [
+            { customer_name: "David Lim", quantity: 3, remarks: "Already paid" },
+            { customer_name: "Eva Santos", quantity: 2, remarks: "Pending payment" },
+            ],
+        },
+        {
+            id: "ORD013",
+            name: "Chocolate Cake - 1/5/2026",
+            details: [
+            { customer_name: "Jane Smith", quantity: 1, remarks: "Birthday" },
+            { customer_name: "John Doe", quantity: 2, remarks: "" },
+            ],
+        },
+        {
+            id: "ORD014",
+            name: "Fruit Juice - 1/6/2026",
+            details: [
+            { customer_name: "Alice Tan", quantity: 2, remarks: "" },
+            { customer_name: "Bob Lee", quantity: 1, remarks: "Bring cold" },
+            ],
+        },
+        {
+            id: "ORD015",
+            name: "Pancake - 1/7/2026",
+            details: [
+            { customer_name: "Clara Reyes", quantity: 3, remarks: "Allergy: milk" },
+            { customer_name: "Eva Santos", quantity: 2, remarks: "" },
+            ],
+        },
+        {
+            id: "ORD016",
+            name: "Waffles - 1/8/2026",
+            details: [
+            { customer_name: "John Doe", quantity: 1, remarks: "" },
+            { customer_name: "David Lim", quantity: 2, remarks: "Extra syrup" },
+            ],
+        },
+        {
+            id: "ORD017",
+            name: "Omelette - 1/9/2026",
+            details: [
+            { customer_name: "Jane Smith", quantity: 2, remarks: "" },
+            { customer_name: "Alice Tan", quantity: 1, remarks: "Urgent" },
+            ],
+        },
+        {
+            id: "ORD018",
+            name: "French Toast - 1/10/2026",
+            details: [
+            { customer_name: "Clara Reyes", quantity: 2, remarks: "" },
+            { customer_name: "Bob Lee", quantity: 1, remarks: "Special request" },
+            ],
+        },
+        {
+            id: "ORD019",
+            name: "BBQ Stick - 1/12/2026",
+            details: [
+            { customer_name: "John Doe", quantity: 3, remarks: "" },
+            { customer_name: "Eva Santos", quantity: 2, remarks: "Already paid" },
+            ],
+        },
+        {
+            id: "ORD020",
+            name: "Chocolate Cake - 1/14/2026",
+            details: [
+            { customer_name: "Alice Tan", quantity: 1, remarks: "" },
+            { customer_name: "David Lim", quantity: 2, remarks: "Birthday" },
+            ],
         },
     ]);
 

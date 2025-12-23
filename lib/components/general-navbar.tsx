@@ -8,7 +8,7 @@ import { useState } from "react";
 export default function GeneralNavbar() {
   const router = useRouter();
 
-  const buttonsClassName = "font-semibold transition duration-300 hover:bg-gray-900";
+  const buttonsClassName = "font-semibold transition duration-300 hover:bg-orange-600";
 
   const [navbarBG, setNavbarBG] = useState<string>("");
   useOnScrollAt(

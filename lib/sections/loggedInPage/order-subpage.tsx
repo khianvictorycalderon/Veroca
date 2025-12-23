@@ -25,7 +25,7 @@ export default function OrderSubPage() {
     const [orderItems, setOrderItems] = useState<OrderManagementOrderListProps[]>([
         {
             id: "ORD001",
-            name: "Pancake - Tomorrow",
+            name: "Pancake - Tomorrow asgsdgasd gasdg asdg sadg asdg adsgasdg d LX3R",
             details: [
             { customer_name: "John Doe", quantity: 2, remarks: "Bring tomorrow" },
             { customer_name: "Jane Smith", quantity: 3, remarks: "Extra syrup" },
@@ -199,6 +199,12 @@ export default function OrderSubPage() {
         setSearchOrderInput(e.target.value);
     }
 
+    const truncateText = (text: string, maxLength = 25) => {
+        return text.length > maxLength
+            ? text.slice(0, maxLength) + "..."
+            : text;
+    };
+
     // ----------------------------------------------------------
 
     // ----------------------------------------------------------
@@ -252,7 +258,7 @@ export default function OrderSubPage() {
                                         onClick={() => setCurrentSelectedOrder(item)}
                                         className="w-full text-left py-2 px-2 transition duration-300 cursor-pointer rounded-md hover:bg-gray-600"
                                     >
-                                        {item.name}
+                                        {truncateText(item.name, 35)}
                                     </button>
                                 ))}
                             </div>

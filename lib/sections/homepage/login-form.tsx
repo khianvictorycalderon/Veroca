@@ -76,7 +76,7 @@ export default function LoginForm({
                         </form>
                     </FormProvider>
                     {errorMessage && <BaseText className="text-center mt-4 text-red-400">{errorMessage}</BaseText>}
-                    <BaseText className="mt-4 text-right">No Account? <button onClick={() => setPage("register")} className="text-blue-600 underline cursor-pointer">Create One</button></BaseText>
+                    <BaseText className="mt-4 text-right">No Account? <button onClick={() => setPage("register")} className="text-orange-600 underline cursor-pointer">Create One</button></BaseText>
                 </div>
             </div>
         </SectionContainer>

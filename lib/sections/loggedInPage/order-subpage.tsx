@@ -1,7 +1,7 @@
 'use client'
 
 import { BaseText } from "@/lib/components/typography";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function OrderSubPage() {
     
@@ -18,6 +18,12 @@ export default function OrderSubPage() {
 
     // ----------------------------------------------------------
     // Order list/view part
+    const [searchOrderInput, setSearchOrderInput] = useState<string>("");
+
+    const handleOnSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchOrderInput(e.target.value);
+    }
+
     // ----------------------------------------------------------
 
     // ----------------------------------------------------------
@@ -37,28 +43,39 @@ export default function OrderSubPage() {
                             <input
                                 ref={addOrderName}
                                 type="text"
-                                placeholder="Enter order name"
+                                placeholder="Enter order name..."
                                 className="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
                             />
                             <button
                                 onClick={handleSubmit}
                                 className="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition cursor-pointer"
-                            >
-                            Add
-                            </button>
+                            >Add</button>
                         </div>
                     </div>
 
 
                 </div>
                 <div className="flex-2/3 lg:flex-3/4 overflow-y-auto py-8 px-4 lg:px-8 bg-neutral-800">
-                    Orders and Search bar here...
+                    
+                    <div className="w-full text-center">
+                        <label className="block mb-2"><BaseText>Search Order: </BaseText></label>
+                        <input
+                            value={searchOrderInput}
+                            onChange={handleOnSearch}
+                            type="text"
+                            placeholder="Search order name..."
+                            className="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition w-full"
+                        />
+                    </div>
+
                 </div>
             </div>
 
             {/* Order Details Section */}
             <div className="lg:flex-3/4 bg-gray-100 text-neutral-700 h-[100vh] overflow-y-auto py-16 px-4 lg:px-8">
-                Order details here...                
+
+                Content here...
+
             </div>
 
         </div>

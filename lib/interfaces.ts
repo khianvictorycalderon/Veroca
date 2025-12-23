@@ -87,7 +87,7 @@ export interface AccountManagementFieldProps {
 export interface OrderManagementOrderListProps {
   id: string;
   name: string;
-  details: {
+  customers: {
     customer_name: string;
     quantity: number;
     remarks: string;

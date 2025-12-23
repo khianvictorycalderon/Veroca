@@ -25,164 +25,115 @@ export default function OrderSubPage() {
     const [orderItems, setOrderItems] = useState<OrderManagementOrderListProps[]>([
         {
             id: "ORD001",
-            name: "Pancake - Tomorrow asgsdgasd gasdg asdg sadg asdg adsgasdg d LX3R",
-            details: [
-            { customer_name: "John Doe", quantity: 2, remarks: "Bring tomorrow" },
-            { customer_name: "Jane Smith", quantity: 3, remarks: "Extra syrup" },
+            name: "Pancake - Tomorrow",
+            customers: [
+                { customer_name: "John Doe", quantity: 2, remarks: "Extra syrup" },
+                { customer_name: "Jane Smith", quantity: 1, remarks: "No butter" },
             ],
         },
         {
             id: "ORD002",
-            name: "Waffles - Tomorrow",
-            details: [
-            { customer_name: "Alice Tan", quantity: 1, remarks: "" },
-            { customer_name: "Bob Lee", quantity: 2, remarks: "No nuts" },
-            { customer_name: "Clara Reyes", quantity: 2, remarks: "Urgent" },
+            name: "BBQ Stick - Next Week",
+            customers: [
+                { customer_name: "Mark Cruz", quantity: 10, remarks: "Spicy" },
+                { customer_name: "Anna Lopez", quantity: 5, remarks: "Medium heat" },
             ],
         },
         {
             id: "ORD003",
-            name: "Omelette - Tomorrow",
-            details: [
-            { customer_name: "David Lim", quantity: 3, remarks: "Extra cheese" },
-            { customer_name: "Eva Santos", quantity: 1, remarks: "" },
+            name: "Eggplant - 1/25/20",
+            customers: [
+                { customer_name: "Carlos Reyes", quantity: 3, remarks: "Grilled" },
             ],
         },
         {
             id: "ORD004",
-            name: "French Toast - 12/25/2025",
-            details: [
-            { customer_name: "John Doe", quantity: 2, remarks: "Bring tomorrow" },
-            { customer_name: "Alice Tan", quantity: 2, remarks: "" },
-            { customer_name: "Bob Lee", quantity: 1, remarks: "Special request" },
+            name: "Chicken Adobo - Today",
+            customers: [
+                { customer_name: "Liza Fernandez", quantity: 2, remarks: "Less oil" },
+                { customer_name: "Paul Lim", quantity: 1, remarks: "Extra sauce" },
             ],
         },
         {
             id: "ORD005",
-            name: "BBQ Stick - Next Week",
-            details: [
-            { customer_name: "Jane Smith", quantity: 4, remarks: "Already paid" },
-            { customer_name: "Clara Reyes", quantity: 3, remarks: "Pending payment" },
+            name: "Milk Tea - Afternoon Pickup",
+            customers: [
+                { customer_name: "Samantha Lee", quantity: 4, remarks: "50% sugar" },
             ],
         },
         {
             id: "ORD006",
-            name: "Chocolate Cake - 12/31/2025",
-            details: [
-            { customer_name: "David Lim", quantity: 1, remarks: "Birthday" },
-            { customer_name: "Alice Tan", quantity: 2, remarks: "" },
+            name: "Burger Steak - Friday",
+            customers: [
+                { customer_name: "Nathan Wong", quantity: 2, remarks: "Extra gravy" },
+                { customer_name: "Ivy Tan", quantity: 1, remarks: "No onions" },
             ],
         },
         {
             id: "ORD007",
-            name: "Fruit Juice - Next Week",
-            details: [
-            { customer_name: "Clara Reyes", quantity: 3, remarks: "" },
-            { customer_name: "Eva Santos", quantity: 2, remarks: "Bring cold" },
+            name: "Fish Fillet - 02/01/25",
+            customers: [
+                { customer_name: "Brian Santos", quantity: 3, remarks: "Crispy" },
             ],
         },
         {
             id: "ORD008",
-            name: "Pancake - 12/26/2025",
-            details: [
-            { customer_name: "John Doe", quantity: 1, remarks: "Allergy: nuts" },
-            { customer_name: "David Lim", quantity: 2, remarks: "" },
+            name: "Spaghetti - Weekend Order",
+            customers: [
+                { customer_name: "Kim Alvarez", quantity: 5, remarks: "Sweet style" },
+                { customer_name: "Ronald Yu", quantity: 2, remarks: "Extra cheese" },
             ],
         },
         {
             id: "ORD009",
-            name: "Waffles - 12/27/2025",
-            details: [
-            { customer_name: "Alice Tan", quantity: 3, remarks: "" },
-            { customer_name: "Eva Santos", quantity: 1, remarks: "Urgent" },
+            name: "Fried Rice - Morning",
+            customers: [
+                { customer_name: "Ella Mendoza", quantity: 2, remarks: "With egg" },
             ],
         },
         {
             id: "ORD010",
-            name: "Omelette - 12/28/2025",
-            details: [
-            { customer_name: "Jane Smith", quantity: 2, remarks: "Extra cheese" },
-            { customer_name: "Clara Reyes", quantity: 1, remarks: "" },
+            name: "Hotdog Sandwich - Lunch",
+            customers: [
+                { customer_name: "Joshua Kim", quantity: 3, remarks: "No mayo" },
+                { customer_name: "Angela Park", quantity: 1, remarks: "Extra ketchup" },
             ],
         },
         {
             id: "ORD011",
-            name: "French Toast - 12/29/2025",
-            details: [
-            { customer_name: "John Doe", quantity: 2, remarks: "Bring tomorrow" },
-            { customer_name: "Alice Tan", quantity: 1, remarks: "" },
+            name: "Lechon Kawali - Party Order",
+            customers: [
+                { customer_name: "Miguel Bautista", quantity: 6, remarks: "Extra crispy" },
             ],
         },
         {
             id: "ORD012",
-            name: "BBQ Stick - 1/2/2026",
-            details: [
-            { customer_name: "David Lim", quantity: 3, remarks: "Already paid" },
-            { customer_name: "Eva Santos", quantity: 2, remarks: "Pending payment" },
+            name: "Vegetable Lumpia - 01/30/25",
+            customers: [
+                { customer_name: "Nina Gomez", quantity: 20, remarks: "Small size" },
+                { customer_name: "Oscar Lim", quantity: 10, remarks: "With sauce" },
             ],
         },
         {
             id: "ORD013",
-            name: "Chocolate Cake - 1/5/2026",
-            details: [
-            { customer_name: "Jane Smith", quantity: 1, remarks: "Birthday" },
-            { customer_name: "John Doe", quantity: 2, remarks: "" },
+            name: "BBQ Isaw - Night Order",
+            customers: [
+                { customer_name: "Kevin Ramos", quantity: 15, remarks: "Well-done" },
             ],
         },
         {
             id: "ORD014",
-            name: "Fruit Juice - 1/6/2026",
-            details: [
-            { customer_name: "Alice Tan", quantity: 2, remarks: "" },
-            { customer_name: "Bob Lee", quantity: 1, remarks: "Bring cold" },
+            name: "Banana Cue - Afternoon",
+            customers: [
+                { customer_name: "Patricia Ong", quantity: 8, remarks: "Extra sugar" },
             ],
         },
         {
             id: "ORD015",
-            name: "Pancake - 1/7/2026",
-            details: [
-            { customer_name: "Clara Reyes", quantity: 3, remarks: "Allergy: milk" },
-            { customer_name: "Eva Santos", quantity: 2, remarks: "" },
-            ],
-        },
-        {
-            id: "ORD016",
-            name: "Waffles - 1/8/2026",
-            details: [
-            { customer_name: "John Doe", quantity: 1, remarks: "" },
-            { customer_name: "David Lim", quantity: 2, remarks: "Extra syrup" },
-            ],
-        },
-        {
-            id: "ORD017",
-            name: "Omelette - 1/9/2026",
-            details: [
-            { customer_name: "Jane Smith", quantity: 2, remarks: "" },
-            { customer_name: "Alice Tan", quantity: 1, remarks: "Urgent" },
-            ],
-        },
-        {
-            id: "ORD018",
-            name: "French Toast - 1/10/2026",
-            details: [
-            { customer_name: "Clara Reyes", quantity: 2, remarks: "" },
-            { customer_name: "Bob Lee", quantity: 1, remarks: "Special request" },
-            ],
-        },
-        {
-            id: "ORD019",
-            name: "BBQ Stick - 1/12/2026",
-            details: [
-            { customer_name: "John Doe", quantity: 3, remarks: "" },
-            { customer_name: "Eva Santos", quantity: 2, remarks: "Already paid" },
-            ],
-        },
-        {
-            id: "ORD020",
-            name: "Chocolate Cake - 1/14/2026",
-            details: [
-            { customer_name: "Alice Tan", quantity: 1, remarks: "" },
-            { customer_name: "David Lim", quantity: 2, remarks: "Birthday" },
+            name: "Pork Sisig - Saturday",
+            customers: [
+                { customer_name: "Daniel Chua", quantity: 2, remarks: "With egg" },
+                { customer_name: "Rhea Velasco", quantity: 1, remarks: "No chili" },
             ],
         },
     ]);
@@ -193,7 +144,8 @@ export default function OrderSubPage() {
 
     const filteredOrders = orderItems
         .filter(order => order.name.includes(searchOrderInput)) // case-sensitive, partial match
-        .sort((a, b) => a.name.localeCompare(b.name)); // alphabetical sort
+        // Sorting must be done on the PostgreSQL query, not here
+        // .sort((a, b) => a.name.localeCompare(b.name)); // alphabetical sort
 
     const handleOnSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchOrderInput(e.target.value);

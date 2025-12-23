@@ -1,6 +1,7 @@
 'use client'
 
 import { BaseText } from "@/lib/components/typography";
+import { OrderManagementOrderListProps } from "@/lib/interfaces";
 import { useRef, useState } from "react";
 
 export default function OrderSubPage() {
@@ -19,10 +20,10 @@ export default function OrderSubPage() {
     // ----------------------------------------------------------
     // Order list/view part
     const [searchOrderInput, setSearchOrderInput] = useState<string>("");
-    const [currentSelectedOrder, setCurrentSelectedOrder] = useState();
+    const [currentSelectedOrder, setCurrentSelectedOrder] = useState<OrderManagementOrderListProps | null>(null);
 
     // Sample only, actual implementation later (Fetched from back-end)
-    const [orderItems, setOrderItems] = useState([
+    const [orderItems, setOrderItems] = useState<OrderManagementOrderListProps[]>([
         {
             id: "ORD001",
             name: "BBQ Stick - Tomorrow",
@@ -134,7 +135,7 @@ export default function OrderSubPage() {
                         {orderItems.length > 0 ? (
                             <div className="flex flex-col gap-2">
                                 {orderItems.map((item, index) => (
-                                    <button className="w-full text-left py-2 px-2 transition duration-300 cursor-pointer rounded-md hover:bg-gray-600" key={`${item.name}-${index}`}>
+                                    <button onClick={() => setCurrentSelectedOrder(item)} className="w-full text-left py-2 px-2 transition duration-300 cursor-pointer rounded-md hover:bg-gray-600" key={`${item.name}-${index}`}>
                                         {item.name}
                                     </button>
                                 ))}
@@ -150,7 +151,7 @@ export default function OrderSubPage() {
             {/* Order Details Section */}
             <div className="lg:flex-3/4 bg-gray-100 text-neutral-700 h-[100vh] overflow-y-auto py-16 px-4 lg:px-8">
 
-                Content here...
+                Current Selected Order: {currentSelectedOrder?.name || "No order selected yet"}
 
             </div>
 

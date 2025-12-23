@@ -81,3 +81,23 @@ export interface AccountManagementFieldProps {
   pattern?: string;
 }
 // -------------------------------------------------------------
+
+// -------------------------------------------------------------
+// Order Management interface
+export interface OrderManagementOrderListProps {
+  id: string;
+  name: string;
+  details: {
+    customer_name: string;
+    quantity: number;
+    remarks: string;
+  }[];
+}
+
+// id: "ORD005",
+//             name: "Waffles - Tomorrow",
+//             details: [
+//                 { customer_name: "Jane Smith", quantity: 4, remarks: "" },
+//                 { customer_name: "Bob Lee", quantity: 2, remarks: "Urgent" },
+//             ]
+// -------------------------------------------------------------

@@ -230,11 +230,11 @@ export default function OrderSubPage() {
                                 ref={addOrderName}
                                 type="text"
                                 placeholder="Enter order name..."
-                                className="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
+                                className="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
                             />
                             <button
                                 onClick={handleSubmit}
-                                className="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition cursor-pointer"
+                                className="px-4 py-2 bg-orange-400 text-white font-semibold rounded-lg hover:bg-orange-700 transition cursor-pointer"
                             >Add</button>
                         </div>
                     </div>
@@ -250,7 +250,7 @@ export default function OrderSubPage() {
                             onChange={handleOnSearch}
                             type="text"
                             placeholder="Search order name..."
-                            className="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition w-full"
+                            className="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition w-full"
                         />
                     </div>
 
@@ -262,12 +262,12 @@ export default function OrderSubPage() {
                                     return (
                                         <div
                                             key={`${item.name}-${index}`}
-                                            className={`flex justify-between items-center w-full py-2 px-2 rounded-md transition duration-300
-                                                ${isSelected ? "bg-neutral-600 text-white" : "hover:bg-gray-600"}`}
+                                            className={`flex justify-between items-center rounded-md transition duration-300 z-10
+                                                ${isSelected ? "bg-orange-500 text-white" : "hover:bg-gray-600"}`}
                                         >
                                             <button
                                                 onClick={() => setCurrentSelectedOrder(item)}
-                                                className="text-left flex-1 cursor-pointer"
+                                                className="text-left flex-1 cursor-pointer py-2 px-2 w-full"
                                             >
                                                 {truncateText(item.name, 35)}
                                             </button>
@@ -279,9 +279,9 @@ export default function OrderSubPage() {
                                                         setCurrentCustomers([]);
                                                     }
                                                 }}
-                                                className="ml-2 text-red-500 hover:text-red-700 cursor-pointer"
+                                                className="ml-2 text-red-500 hover:text-red-700 cursor-pointer z-40"
                                             >
-                                                <TiDelete size={20} />
+                                                <TiDelete size={24} />
                                             </button>
                                         </div>
                                     );
@@ -303,83 +303,83 @@ export default function OrderSubPage() {
 
                 {currentSelectedOrder ? (
                     <div className="overflow-x-auto">
-                        <table className="w-full border-collapse bg-white rounded-lg shadow-md overflow-hidden">
-                            <thead className="bg-gray-200">
-                            <tr>
-                                <th className="p-3 text-left">Customer Name</th>
-                                <th className="p-3 text-left w-32">Quantity</th>
-                                <th className="p-3 text-left">Remarks</th>
-                                <th className="p-3 text-left w-12">Delete</th>
-                            </tr>
+                        <table className="w-full border-none overflow-hidden">
+                           <thead className="bg-orange-500 text-white">
+                                <tr>
+                                    <th className="w-[50%] p-3 text-cebter rounded-tl-lg rounded-bl-lg">Customer<span className="hidden lg:inline"> Name</span></th>
+                                    <th className="w-[30%] p-3 text-center">Remarks</th>
+                                    <th className="w-[10%] p-3 text-center ">Quantity</th>
+                                    <th className="w-fit p-3 text-center rounded-tr-lg rounded-br-lg"><span className="hidden lg:block">Delete</span></th>
+                                </tr>
                             </thead>
                             <tbody>
-                            {currentCustomers.map((customer, index) => (
-                                <tr
-                                key={index}
-                                className="border-t hover:bg-gray-50 transition-colors duration-200"
-                                >
-                                <td className="p-2">
-                                    <input
-                                    type="text"
-                                    value={customer.customer_name}
-                                    onChange={e =>
-                                        updateCustomerField(index, "customer_name", e.target.value)
-                                    }
-                                    className="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
-                                    />
-                                </td>
-                                <td className="p-2">
-                                    <input
-                                    type="number"
-                                    min={1}
-                                    value={customer.quantity}
-                                    onChange={e =>
-                                        updateCustomerField(index, "quantity", Number(e.target.value))
-                                    }
-                                    className="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
-                                    />
-                                </td>
-                                <td className="p-2">
-                                    <input
-                                    type="text"
-                                    value={customer.remarks}
-                                    onChange={e =>
-                                        updateCustomerField(index, "remarks", e.target.value)
-                                    }
-                                    className="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
-                                    />
-                                </td>
-                                <td className="p-2 text-center">
-                                    <button
-                                    onClick={() => deleteCustomerRow(index)}
-                                    className="text-red-500 hover:text-red-700 transition"
+                                {currentCustomers.map((customer, index) => (
+                                    <tr
+                                        key={index}
+                                        className="transition-colors duration-200"
                                     >
-                                    <TiDelete size={20} />
-                                    </button>
-                                </td>
-                                </tr>
-                            ))}
+                                    <td className="p-2">
+                                        <input
+                                        type="text"
+                                        value={customer.customer_name}
+                                        onChange={e =>
+                                            updateCustomerField(index, "customer_name", e.target.value)
+                                        }
+                                        className="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+                                        />
+                                    </td>
+                                    <td className="p-2">
+                                        <input
+                                        type="text"
+                                        value={customer.remarks}
+                                        onChange={e =>
+                                            updateCustomerField(index, "remarks", e.target.value)
+                                        }
+                                        className="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+                                        />
+                                    </td>
+                                    <td className="p-2">
+                                        <input
+                                        type="number"
+                                        min={1}
+                                        value={customer.quantity}
+                                        onChange={e =>
+                                            updateCustomerField(index, "quantity", Number(e.target.value))
+                                        }
+                                        className="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+                                        />
+                                    </td>
+                                    <td className="p-2 text-center">
+                                        <button
+                                        onClick={() => deleteCustomerRow(index)}
+                                        className="text-orange-500 hover:text-orange-700 transition cursor-pointer"
+                                        >
+                                        <TiDelete size={24} />
+                                        </button>
+                                    </td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
 
-                        <div className="flex gap-4 mt-4">
+                        <div className="flex gap-4 mt-4 justify-center">
                             <button
-                            onClick={addCustomerRow}
-                            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+                                onClick={addCustomerRow}
+                                className="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition cursor-pointer"
                             >
                             + Add Customer
                             </button>
 
                             <button
-                            onClick={handleSave}
-                            className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+                                onClick={handleSave}
+                                className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition cursor-pointer"
                             >
                             Save
                             </button>
 
                             <button
-                            onClick={handleCancel}
-                            className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition"
+                                onClick={handleCancel}
+                                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition cursor-pointer"
                             >
                             Cancel
                             </button>

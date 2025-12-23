@@ -81,7 +81,7 @@ export default function AccountSubPage() {
                                 {fields.map(field => (
                                     <div key={field.name} className={`w-full ${field?.wrapper}`}>
                                         <Input additionalClassName={{
-                                            input: "disabled:!text-neutral-950 disabled:!bg-gray-300 bg-gray-200 focus:ring-2 focus:ring-blue-600"
+                                            input: "disabled:!text-neutral-950 disabled:!bg-gray-300 bg-gray-200 focus:ring-2 focus:ring-orange-600"
                                         }} disabled={!isEditing} {...field} />
                                     </div>
                                 ))}
@@ -92,20 +92,20 @@ export default function AccountSubPage() {
                                             type="submit"
                                             value="Save"
                                             additionalClassName={{
-                                                input: "disabled:!text-gray-400 disabled:!bg-gray-300 !bg-green-600 hover:!bg-green-500 cursor-pointer font-semibold !text-white transition duration-300",
+                                                input: "disabled:!text-gray-400 disabled:!bg-gray-300 !bg-blue-600 hover:!bg-blue-500 cursor-pointer font-semibold !text-white transition duration-300 !ring-0",
                                             }}
                                         />
                                         <button
                                             type="button"
                                             value="Cancel"
-                                            className="disabled:!text-gray-400 disabled:!bg-gray-300 !bg-red-600 hover:!bg-red-500 cursor-pointer font-semibold !text-white transition duration-300 py-2 rounded-md"
+                                            className="disabled:!text-gray-400 disabled:!bg-gray-300 !bg-red-600 hover:!bg-red-500 cursor-pointer font-semibold !text-white transition duration-300 py-2 rounded-md !ring-0"
                                             onClick={onCancel}
                                         >Cancel</button>
                                     </div>
                                 ) : (
                                     <div className="mt-4 lg:col-span-2 lg:mt-0 grid grid-cols-1 gap-4">
                                         <button
-                                            className="disabled:!text-gray-400 disabled:!bg-gray-300 !bg-blue-600 hover:!bg-blue-500 cursor-pointer font-semibold !text-white transition duration-300 py-2 rounded-md"
+                                            className="disabled:!text-gray-400 disabled:!bg-gray-300 !bg-orange-600 hover:!bg-orange-500 cursor-pointer font-semibold !text-white transition duration-300 py-2 rounded-md !ring-0"
                                             onClick={() => setIsEditing(true)}
                                         >Edit</button>
                                     </div>
@@ -129,7 +129,7 @@ export default function AccountSubPage() {
                                     <div key={field.name} className="w-full">
                                         <Input
                                             additionalClassName={{
-                                                input: "bg-gray-200 focus:ring-2 focus:ring-blue-600"
+                                                input: "bg-gray-200 focus:ring-2 focus:ring-orange-600"
                                             }}
                                             {...field}
                                         />
@@ -141,7 +141,7 @@ export default function AccountSubPage() {
                                         type="submit"
                                         value="Update Password"
                                         additionalClassName={{
-                                            input: "!bg-green-600 hover:!bg-green-500 cursor-pointer font-semibold !text-white transition duration-300",
+                                            input: "!bg-amber-500 hover:!bg-amber-400 cursor-pointer font-semibold !text-white transition duration-300 !ring-0",
                                         }}
                                     />
                                 </div>

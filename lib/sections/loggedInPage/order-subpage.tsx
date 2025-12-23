@@ -363,5 +363,5 @@ export default function OrderSubPage() {
             </div>
 
         </div>
-    )
+    );
 }

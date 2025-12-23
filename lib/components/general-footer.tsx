@@ -11,7 +11,7 @@ export default function GeneralFooter() {
     return (
         <Footer
             
-            className="!bg-gray-900 !border-none"
+            className="!bg-neutral-950 !border-none"
             logo="icons/Khian_Icon_Logo.png"
             texts={[
                 {

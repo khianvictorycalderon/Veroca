@@ -20,7 +20,6 @@ export default function OrderSubPage() {
     // ----------------------------------------------------------
     // Order list/view part
     const [searchOrderInput, setSearchOrderInput] = useState<string>("");
-    const [currentSelectedOrder, setCurrentSelectedOrder] = useState<OrderManagementOrderListProps | null>(null);
 
     // Sample only, actual implementation later (Fetched from back-end)
     const [orderItems, setOrderItems] = useState<OrderManagementOrderListProps[]>([
@@ -188,6 +187,13 @@ export default function OrderSubPage() {
         },
     ]);
 
+    const [currentSelectedOrder, setCurrentSelectedOrder] = useState<OrderManagementOrderListProps | null>(
+        orderItems.length > 0 ? orderItems[0] : null
+    );
+
+    const filteredOrders = orderItems
+        .filter(order => order.name.includes(searchOrderInput)) // case-sensitive, partial match
+        .sort((a, b) => a.name.localeCompare(b.name)); // alphabetical sort
 
     const handleOnSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchOrderInput(e.target.value);
@@ -238,18 +244,23 @@ export default function OrderSubPage() {
                     </div>
 
                     <div className="mt-8">
-                        {orderItems.length > 0 ? (
+                        {filteredOrders.length > 0 ? (
                             <div className="flex flex-col gap-2">
-                                {orderItems.map((item, index) => (
-                                    <button onClick={() => setCurrentSelectedOrder(item)} className="w-full text-left py-2 px-2 transition duration-300 cursor-pointer rounded-md hover:bg-gray-600" key={`${item.name}-${index}`}>
+                                {filteredOrders.map((item, index) => (
+                                    <button
+                                        key={`${item.name}-${index}`}
+                                        onClick={() => setCurrentSelectedOrder(item)}
+                                        className="w-full text-left py-2 px-2 transition duration-300 cursor-pointer rounded-md hover:bg-gray-600"
+                                    >
                                         {item.name}
                                     </button>
                                 ))}
                             </div>
                         ) : (
-                            <BaseText>No orders yet.</BaseText>
+                            <BaseText className="text-center">No orders found.</BaseText>
                         )}
                     </div>
+
 
                 </div>
             </div>

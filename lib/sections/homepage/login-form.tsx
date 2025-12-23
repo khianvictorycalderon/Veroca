@@ -69,7 +69,7 @@ export default function LoginForm({
                                 type="submit"
                                 value="Login"
                                 additionalClassName={{
-                                    input: "disabled:!text-gray-400 disabled:!bg-gray-300 !bg-green-600 hover:!bg-green-500 cursor-pointer font-semibold !text-white transition duration-300",
+                                    input: "disabled:!text-gray-400 disabled:!bg-gray-300 !bg-orange-500 hover:!bg-orange-400 cursor-pointer font-semibold !text-white transition duration-300",
                                 }}
                             />
                             </div>

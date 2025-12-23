@@ -29,6 +29,7 @@ export default function HomePage() {
                     subheading="Manage your order without manually writing it and never forget client's order again!"
                     dark_cover_opacity={0.8}
                     cta_buttons={CTAButton}
+                    className="!bg-fixed"
                 />
             </div>
             <div id="home-page-account-section"/>

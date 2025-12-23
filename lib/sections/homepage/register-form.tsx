@@ -47,7 +47,7 @@ export default function RegisterForm({
                                     type="submit"
                                     value="Register"
                                     additionalClassName={{
-                                        input: "!bg-green-600 hover:!bg-green-500 cursor-pointer font-semibold !text-white transition duration-300",
+                                        input: "!bg-orange-500 hover:!bg-orange-400 cursor-pointer font-semibold !text-white transition duration-300",
                                     }}
                                 />
                             </div>

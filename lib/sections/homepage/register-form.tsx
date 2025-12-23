@@ -53,7 +53,7 @@ export default function RegisterForm({
                             </div>
                         </form>
                     </FormProvider>
-                    <BaseText className="mt-4 text-right">Already have an Account? <button onClick={() => setPage("login")} className="text-blue-600 underline cursor-pointer">Sign-In</button></BaseText>
+                    <BaseText className="mt-4 text-right">Already have an Account? <button onClick={() => setPage("login")} className="text-orange-600 underline cursor-pointer">Sign-In</button></BaseText>
                 </div>
             </div>
         </SectionContainer>

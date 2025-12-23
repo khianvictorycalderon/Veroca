@@ -94,6 +94,12 @@ export interface OrderManagementOrderListProps {
   }[];
 }
 
+export interface OrderManagementCustomerRefs {
+  customer_name: HTMLInputElement | null;
+  quantity: HTMLInputElement | null;
+  remarks: HTMLInputElement | null;
+};
+
 // id: "ORD005",
 //             name: "Waffles - Tomorrow",
 //             details: [

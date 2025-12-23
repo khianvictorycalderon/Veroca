@@ -1,8 +1,9 @@
 'use client'
 
-import { BaseText } from "@/lib/components/typography";
-import { OrderManagementOrderListProps } from "@/lib/interfaces";
-import { useRef, useState } from "react";
+import { BaseText, HeadingText } from "@/lib/components/typography";
+import { OrderManagementCustomerRefs, OrderManagementOrderListProps } from "@/lib/interfaces";
+import { useEffect, useRef, useState } from "react";
+import { TiDelete } from "react-icons/ti";
 
 export default function OrderSubPage() {
     
@@ -138,10 +139,6 @@ export default function OrderSubPage() {
         },
     ]);
 
-    const [currentSelectedOrder, setCurrentSelectedOrder] = useState<OrderManagementOrderListProps | null>(
-        orderItems.length > 0 ? orderItems[0] : null
-    );
-
     const filteredOrders = orderItems
         .filter(order => order.name.includes(searchOrderInput)) // case-sensitive, partial match
         // Sorting must be done on the PostgreSQL query, not here
@@ -161,6 +158,62 @@ export default function OrderSubPage() {
 
     // ----------------------------------------------------------
     // Order details part (CRUD mostly)
+    const [currentSelectedOrder, setCurrentSelectedOrder] = useState<OrderManagementOrderListProps | null>(
+        orderItems.length > 0 ? orderItems[0] : null
+    );
+
+    const [currentCustomers, setCurrentCustomers] = useState<OrderManagementOrderListProps["customers"]>(
+        currentSelectedOrder?.customers || []
+    );
+
+    // Whenever currentSelectedOrder changes, update currentCustomers
+    useEffect(() => {
+        if (currentSelectedOrder) {
+            setCurrentCustomers(currentSelectedOrder.customers);
+        } else {
+            setCurrentCustomers([]);
+        }
+    }, [currentSelectedOrder]);
+
+    // Add new customer
+    const addCustomerRow = () => {
+        setCurrentCustomers(prev => [...prev, { customer_name: "", quantity: 1, remarks: "" }]);
+    };
+
+    // Delete customer
+    const deleteCustomerRow = (index: number) => {
+        setCurrentCustomers(prev => prev.filter((_, i) => i !== index));
+    };
+
+    // Update customer field
+    const updateCustomerField = (index: number, field: keyof typeof currentCustomers[0], value: any) => {
+        setCurrentCustomers(prev => {
+            const newArr = [...prev];
+            newArr[index] = { ...newArr[index], [field]: value };
+            return newArr;
+        });
+    };
+
+    // Save changes
+    const handleSave = () => {
+        if (!currentSelectedOrder) return;
+
+        // Update the selected order with current customer state
+        const updatedOrder = { ...currentSelectedOrder, customers: currentCustomers };
+        setCurrentSelectedOrder(updatedOrder);
+
+        // Update the order list
+        setOrderItems(prev => prev.map(order => order.id === updatedOrder.id ? updatedOrder : order));
+        console.log("Saved", updatedOrder);
+    };
+
+    // Cancel changes
+    const handleCancel = () => {
+        if (!currentSelectedOrder) return;
+        setCurrentCustomers(currentSelectedOrder.customers);
+        console.log("Cancelled", currentSelectedOrder);
+    };
+    
     // ----------------------------------------------------------
 
     return (
@@ -225,9 +278,88 @@ export default function OrderSubPage() {
 
             {/* Order Details Section */}
             <div className="lg:flex-3/4 bg-gray-100 text-neutral-700 h-[100vh] overflow-y-auto py-16 px-4 lg:px-8">
+                <HeadingText className="text-center mb-8">
+                    {currentSelectedOrder?.name || "Select Order"}
+                </HeadingText>
 
-                Current Selected Order: {currentSelectedOrder?.name || "No order selected yet"}
+                {currentSelectedOrder ? (
+                    <div className="overflow-x-auto">
+                        <table className="w-full border-collapse bg-white rounded-lg shadow">
+                            <thead className="bg-gray-200">
+                                <tr>
+                                    <th className="p-3 text-left">Customer Name</th>
+                                    <th className="p-3 text-left w-32">Quantity</th>
+                                    <th className="p-3 text-left">Remarks</th>
+                                    <th className="p-3 text-left w-12">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {currentCustomers.map((customer, index) => (
+                                    <tr key={index} className="border-t">
+                                        <td className="p-2">
+                                            <input
+                                                type="text"
+                                                value={customer.customer_name}
+                                                onChange={e => updateCustomerField(index, "customer_name", e.target.value)}
+                                                className="w-full px-3 py-2 border rounded-md"
+                                            />
+                                        </td>
+                                        <td className="p-2">
+                                            <input
+                                                type="number"
+                                                min={1}
+                                                value={customer.quantity}
+                                                onChange={e => updateCustomerField(index, "quantity", Number(e.target.value))}
+                                                className="w-full px-3 py-2 border rounded-md"
+                                            />
+                                        </td>
+                                        <td className="p-2">
+                                            <input
+                                                type="text"
+                                                value={customer.remarks}
+                                                onChange={e => updateCustomerField(index, "remarks", e.target.value)}
+                                                className="w-full px-3 py-2 border rounded-md"
+                                            />
+                                        </td>
+                                        <td className="p-2 text-center">
+                                            <button
+                                                onClick={() => deleteCustomerRow(index)}
+                                                className="text-red-500 hover:text-red-700"
+                                            >
+                                                <TiDelete size={20} />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
 
+                        <div className="flex gap-4 mt-4">
+                            <button
+                                onClick={addCustomerRow}
+                                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                            >
+                                + Add Customer
+                            </button>
+
+                            <button
+                                onClick={handleSave}
+                                className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+                            >
+                                Save
+                            </button>
+
+                            <button
+                                onClick={handleCancel}
+                                className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                ) : (
+                    <BaseText className="text-center">Select an order to edit</BaseText>
+                )}
             </div>
 
         </div>

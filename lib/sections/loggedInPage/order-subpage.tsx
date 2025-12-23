@@ -13,6 +13,8 @@ export default function OrderSubPage() {
                     Orders and Search bar here...
                 </div>
             </div>
+
+            {/* Order Details Section */}
             <div className="lg:flex-3/4 bg-gray-100 text-neutral-700 h-[100vh] overflow-y-auto py-16 px-4 lg:px-8">
                 Order details here...                
             </div>

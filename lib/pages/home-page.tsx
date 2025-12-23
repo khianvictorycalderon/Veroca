@@ -22,13 +22,15 @@ export default function HomePage() {
     return (
         <>
             <GeneralNavbar/>
-            <Hero
-                background="/images/hero-bg.png"
-                heading="Organize your items"
-                subheading="Manage your order without manually writing it and never forget client's order again!"
-                dark_cover_opacity={0.8}
-                cta_buttons={CTAButton}
-            />
+            <div id="homepage-hero-section">
+                <Hero
+                    background="/images/hero-bg.png"
+                    heading="Organize your items"
+                    subheading="Manage your order without manually writing it and never forget client's order again!"
+                    dark_cover_opacity={0.8}
+                    cta_buttons={CTAButton}
+                />
+            </div>
             <div id="home-page-account-section"/>
             {accountSection == "login" && <LoginForm setPage={setAccountSection}/>}
             {accountSection == "register" && <RegisterForm setPage={setAccountSection}/>}

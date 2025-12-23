@@ -19,6 +19,68 @@ export default function OrderSubPage() {
     // ----------------------------------------------------------
     // Order list/view part
     const [searchOrderInput, setSearchOrderInput] = useState<string>("");
+    const [currentSelectedOrder, setCurrentSelectedOrder] = useState();
+
+    // Sample only, actual implementation later (Fetched from back-end)
+    const [orderItems, setOrderItems] = useState([
+        {
+            id: "ORD001",
+            name: "BBQ Stick - Tomorrow",
+            details: [
+                { customer_name: "John Doe", quantity: 2, remarks: "Bring tomorrow" },
+                { customer_name: "Jane Smith", quantity: 3, remarks: "Extra sauce" },
+            ]
+        },
+        {
+            id: "ORD002",
+            name: "BBQ Stick - Next Week",
+            details: [
+                { customer_name: "Alice Tan", quantity: 1, remarks: "" },
+                { customer_name: "Bob Lee", quantity: 2, remarks: "No onions" },
+            ]
+        },
+        {
+            id: "ORD003",
+            name: "Pancake - 12/25/2025",
+            details: [
+                { customer_name: "Clara Reyes", quantity: 3, remarks: "Christmas special" },
+                { customer_name: "David Lim", quantity: 1, remarks: "" },
+            ]
+        },
+        {
+            id: "ORD004",
+            name: "Baby Powder - 1/24/2026",
+            details: [
+                { customer_name: "Eva Santos", quantity: 2, remarks: "Gift order" },
+                { customer_name: "John Doe", quantity: 1, remarks: "" },
+            ]
+        },
+        {
+            id: "ORD005",
+            name: "Waffles - Tomorrow",
+            details: [
+                { customer_name: "Jane Smith", quantity: 4, remarks: "" },
+                { customer_name: "Bob Lee", quantity: 2, remarks: "Urgent" },
+            ]
+        },
+        {
+            id: "ORD006",
+            name: "Chocolate Cake - 12/31/2025",
+            details: [
+                { customer_name: "David Lim", quantity: 1, remarks: "Birthday" },
+                { customer_name: "Alice Tan", quantity: 2, remarks: "" },
+            ]
+        },
+        {
+            id: "ORD007",
+            name: "Fruit Juice - Next Week",
+            details: [
+                { customer_name: "Clara Reyes", quantity: 3, remarks: "" },
+                { customer_name: "Eva Santos", quantity: 2, remarks: "Bring cold" },
+            ]
+        },
+    ]);
+
 
     const handleOnSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchOrderInput(e.target.value);
@@ -66,6 +128,20 @@ export default function OrderSubPage() {
                             placeholder="Search order name..."
                             className="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition w-full"
                         />
+                    </div>
+
+                    <div className="mt-8">
+                        {orderItems.length > 0 ? (
+                            <div className="flex flex-col gap-2">
+                                {orderItems.map((item, index) => (
+                                    <button className="w-full text-left py-2 px-2 transition duration-300 cursor-pointer rounded-md hover:bg-gray-600" key={`${item.name}-${index}`}>
+                                        {item.name}
+                                    </button>
+                                ))}
+                            </div>
+                        ) : (
+                            <BaseText>No orders yet.</BaseText>
+                        )}
                     </div>
 
                 </div>

@@ -4,19 +4,23 @@ import { Input } from "@/lib/components/input-field";
 import SectionContainer from "@/lib/components/section-container";
 import { BaseText, HeadingText } from "@/lib/components/typography";
 import { AccountManagementFieldProps, AccountManagementFormData, AccountManagementPasswordFormData } from "@/lib/interfaces";
-import { useState } from "react";
+import { handleAPIRequest } from "@/utils/req-helper";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 export default function AccountSubPage() {
 
     const accountInputFieldDefaultValues = {
-        first_name: "John",
-        last_name: "Doe",
-        birth_date: "2003-03-02"
+        first_name: "Loading...",
+        last_name: "Loading...",
+        username: "",
+        birth_date: ""
     }
 
     // ---------------------------------------------------------
     // Account Management
+
     const accountMethods = useForm<AccountManagementFormData>({
         defaultValues: accountInputFieldDefaultValues
     });
@@ -39,6 +43,37 @@ export default function AccountSubPage() {
         { name: "last_name", label: "Last Name" },
         { name: "birth_date", label: "Birth Date", type: "date" }
     ];
+
+    const [username, setUsername] = useState<string>("Loading...");
+    // Fetch 
+    useEffect(() => {
+        async function fetchUserData() {
+            await handleAPIRequest(
+            async () => {
+                const res = await axios.get("/api/account/info");
+                const userData: AccountManagementFormData = res.data;
+
+                // Normalize birth_date to YYYY-MM-DD string
+                if (userData.birth_date) {
+                userData.birth_date = new Date(userData.birth_date)
+                    .toISOString()
+                    .split("T")[0];
+                }
+
+                setUsername(userData.username)
+                accountMethods.reset(userData);
+            },
+            "Failed to retrieve user data",
+            () => {}, // optional setState for error handling
+            async () => {}, // optional errAction
+            async () => {}  // optional finally
+            );
+        }
+
+        fetchUserData();
+    }, [accountMethods]);
+
+
     // ---------------------------------------------------------
 
     // ---------------------------------------------------------
@@ -74,7 +109,7 @@ export default function AccountSubPage() {
                             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                                 <div>
                                 <BaseText className="text-sm text-gray-600">Username</BaseText>
-                                <BaseText className="font-semibold text-lg text-neutral-800 underline">{/* dynamically */}JohnDoe123</BaseText>
+                                <BaseText className="font-semibold text-lg text-neutral-800 underline">{username}</BaseText>
                                 </div>
                                 <div className="sm:text-right">
                                 <BaseText className="text-xs italic text-gray-500">

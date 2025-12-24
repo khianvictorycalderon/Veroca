@@ -65,6 +65,7 @@ export interface GeneralSideBarProps {
 export interface AccountManagementFormData {
   first_name: string;
   last_name: string;
+  username: string;
   birth_date: string;
 }
 

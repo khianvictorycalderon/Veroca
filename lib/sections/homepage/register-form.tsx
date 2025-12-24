@@ -1,6 +1,7 @@
 'use client'
 
 import { Input } from "@/lib/components/input-field";
+import { MessagePopUp } from "@/lib/components/pop-up";
 import SectionContainer from "@/lib/components/section-container";
 import { BaseText, HeadingText } from "@/lib/components/typography";
 import { RegisterFieldProps, RegisterFormData, RegisterFormProps } from "@/lib/interfaces";
@@ -29,6 +30,7 @@ export default function RegisterForm({
 
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
+    const [popUpMessage, setPopUpMessage] = useState<React.ReactNode | string>("");
 
     const onSubmit = (data: RegisterFormData) => {
         setIsSubmitting(true);
@@ -48,6 +50,15 @@ export default function RegisterForm({
 
                 // Clears all the input fields
                 methods.reset();
+
+                // Pop-up message
+                setPopUpMessage(
+                    <span>
+                        You have successfully registered! <br/>
+                        Login your account now!
+                    </span>
+                );
+
             }, 
             "Failed to register",
             setErrorMessage,
@@ -117,6 +128,15 @@ export default function RegisterForm({
 
     return (
         <SectionContainer>
+
+            {/* This pop-up message modal will only show up if user successfully registered */}
+            {popUpMessage && (
+                <MessagePopUp
+                    message={popUpMessage}
+                    onClose={() => window.location.reload()}
+                />
+            )}
+
             <div className="py-4 md:py-8 lg:py-16 min-h-[70vh] flex flex-col items-center justify-center">
                 <div className="w-full">
                     <HeadingText className="text-center text-neutral-800">Create an Account</HeadingText>

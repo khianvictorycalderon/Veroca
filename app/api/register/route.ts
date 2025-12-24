@@ -2,7 +2,7 @@ import pool from "@/utils/db";
 import { dev } from "@/utils/dev-log";
 import { handleQuery } from "@/utils/qr-helper";
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcryptjs"; // install with: npm install bcryptjs
+import bcrypt from "bcryptjs";
 
 // Trying to register
 export async function POST(request: NextRequest) {

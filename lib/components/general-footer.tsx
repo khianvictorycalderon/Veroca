@@ -27,7 +27,7 @@ export default function GeneralFooter() {
                     ),
                 },
                 {
-                    title: "Resource",
+                    title: "Resources",
                     content: (
                         <ul className={sectionClassName}>
                             <li>

@@ -72,8 +72,19 @@ export async function POST(request: NextRequest) {
 
     return handleQuery(
         async () => {
+            // Check if username already exists
+            const checkQuery = `SELECT id FROM users WHERE username = $1`;
+            const checkResult = await pool.query(checkQuery, [validUsername]);
+
+            if (checkResult.rows.length > 0) {
+            // Username already exists
+            return NextResponse.json(
+                { message: "Username already taken. Please choose another." },
+                { status: 409 } // 409 Conflict
+            )}
+
             // Hash the password before storing it
-            const hashedPassword = await bcrypt.hash(password, 10);
+            const hashedPassword = await bcrypt.hash(validPassword, 10);
 
             // Insert user into the database safely using parameterized query
             const query = `
@@ -89,7 +100,7 @@ export async function POST(request: NextRequest) {
                 message: "Successfully registered!",
                 user: result.rows[0]
             }, { status: 201 });
-            },
-            "Failed to register user"
+        },
+        "Failed to register user"
     );
 }

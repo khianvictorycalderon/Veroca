@@ -3,7 +3,7 @@ import GeneralFooter from "@/lib/components/general-footer";
 import { Input } from "@/lib/components/input-field";
 import SectionContainer from "@/lib/components/section-container";
 import { BaseText, HeadingText } from "@/lib/components/typography";
-import { AccountManagementFieldProps, AccountManagementFormData, AccountManagementPasswordFormData } from "@/lib/interfaces";
+import { AccountManagementFieldProps, AccountManagementFormData, AccountManagementPasswordFormData, LoginFormData } from "@/lib/interfaces";
 import { handleAPIRequest } from "@/utils/req-helper";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -26,53 +26,73 @@ export default function AccountSubPage() {
     });
     const { handleSubmit } = accountMethods;
 
-    const [isEditing, setIsEditing] = useState<boolean>(false);
-
-    const onSave = (data: AccountManagementFormData) => {
-        console.log(data);
-        setIsEditing(false);
-    };
-
-    const onCancel = () => {
-        setIsEditing(false);
-        accountMethods.reset(); // Return to old values
-    }
-
     const fields: AccountManagementFieldProps[] = [
         { name: "first_name", label: "First Name" },
         { name: "last_name", label: "Last Name" },
         { name: "birth_date", label: "Birth Date", type: "date" }
     ];
 
-    const [username, setUsername] = useState<string>("Loading...");
+    const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+    const [fetchedUserData, setFecthedUserData] = useState<AccountManagementFormData>({
+        first_name: "",
+        last_name: "",
+        username: "",
+        birth_date: ""
+    })
+
     // Fetch 
+    async function fetchUserData() {
+        await handleAPIRequest(
+        async () => {
+            const res = await axios.get("/api/account/info");
+            const userData: AccountManagementFormData = res.data;
+
+            // Normalize birth_date to YYYY-MM-DD string
+            if (userData.birth_date) {
+                const date = new Date(userData.birth_date);
+                userData.birth_date = date.toLocaleDateString("en-CA"); // YYYY-MM-DD
+            }
+
+            setFecthedUserData(userData)
+            accountMethods.reset(userData);
+        },
+        "Failed to retrieve user data",
+        () => {}, // optional setState for error handling
+        async () => {}, // optional errAction
+        async () => {}  // optional finally
+        );
+    }
+
+    // On page load, fetch user data
     useEffect(() => {
-        async function fetchUserData() {
-            await handleAPIRequest(
-            async () => {
-                const res = await axios.get("/api/account/info");
-                const userData: AccountManagementFormData = res.data;
-
-                // Normalize birth_date to YYYY-MM-DD string
-                if (userData.birth_date) {
-                userData.birth_date = new Date(userData.birth_date)
-                    .toISOString()
-                    .split("T")[0];
-                }
-
-                setUsername(userData.username)
-                accountMethods.reset(userData);
-            },
-            "Failed to retrieve user data",
-            () => {}, // optional setState for error handling
-            async () => {}, // optional errAction
-            async () => {}  // optional finally
-            );
-        }
-
         fetchUserData();
     }, [accountMethods]);
 
+    const onSave = async (data: AccountManagementFormData) => {
+        setIsSubmitting(true);
+
+        await handleAPIRequest(
+            async () => {
+                await axios.patch("/api/account/info", data);
+                await fetchUserData();
+            },
+            "Failed to update account",
+            () => {}, // pass a setErrorMessage if needed
+            async () => {}, // optional error action
+            async () => {
+                setIsSubmitting(false)
+                setIsEditing(false);
+            }
+        );
+
+    };
+
+    const onCancel = () => {
+        setIsEditing(false);
+        accountMethods.reset(fetchedUserData); // Return to old values
+    }
 
     // ---------------------------------------------------------
 
@@ -109,7 +129,7 @@ export default function AccountSubPage() {
                             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                                 <div>
                                 <BaseText className="text-sm text-gray-600">Username</BaseText>
-                                <BaseText className="font-semibold text-lg text-neutral-800 underline">{username}</BaseText>
+                                <BaseText className="font-semibold text-lg text-neutral-800 underline">{fetchedUserData.username}</BaseText>
                                 </div>
                                 <div className="sm:text-right">
                                 <BaseText className="text-xs italic text-gray-500">
@@ -127,30 +147,33 @@ export default function AccountSubPage() {
                                 {fields.map(field => (
                                     <div key={field.name} className={`w-full ${field?.wrapper}`}>
                                         <Input additionalClassName={{
-                                            input: "disabled:!text-neutral-950 disabled:!bg-gray-300 bg-gray-200 focus:ring-2 focus:ring-orange-600"
-                                        }} disabled={!isEditing} {...field} />
+                                            input: "disabled:cursor-not-allowed disabled:!text-neutral-950 disabled:!bg-gray-300 bg-gray-200 focus:ring-2 focus:ring-orange-600"
+                                        }} disabled={!isEditing || isSubmitting} {...field} />
                                     </div>
                                 ))}
 
                                 {isEditing ? (
                                     <div className="mt-4 lg:col-span-2 lg:mt-0 grid grid-cols-2 gap-4">
                                         <Input
+                                            disabled={isSubmitting}
                                             type="submit"
                                             value="Save"
                                             additionalClassName={{
-                                                input: "disabled:!text-gray-400 disabled:!bg-gray-300 !bg-blue-600 hover:!bg-blue-500 cursor-pointer font-semibold !text-white transition duration-300 !ring-0",
+                                                input: "disabled:cursor-not-allowed disabled:!text-gray-400 disabled:!bg-gray-300 !bg-blue-600 hover:!bg-blue-500 cursor-pointer font-semibold !text-white transition duration-300 !ring-0",
                                             }}
                                         />
                                         <button
+                                            disabled={isSubmitting}
                                             type="button"
                                             value="Cancel"
-                                            className="disabled:!text-gray-400 disabled:!bg-gray-300 !bg-red-600 hover:!bg-red-500 cursor-pointer font-semibold !text-white transition duration-300 py-2 rounded-md !ring-0"
+                                            className="disabled:cursor-not-allowed disabled:!text-gray-400 disabled:!bg-gray-300 !bg-red-600 hover:!bg-red-500 cursor-pointer font-semibold !text-white transition duration-300 py-2 rounded-md !ring-0"
                                             onClick={onCancel}
                                         >Cancel</button>
                                     </div>
                                 ) : (
                                     <div className="mt-4 lg:col-span-2 lg:mt-0 grid grid-cols-1 gap-4">
                                         <button
+                                            disabled={isSubmitting}
                                             className="disabled:!text-gray-400 disabled:!bg-gray-300 !bg-orange-600 hover:!bg-orange-500 cursor-pointer font-semibold !text-white transition duration-300 py-2 rounded-md !ring-0"
                                             onClick={() => setIsEditing(true)}
                                         >Edit</button>
@@ -174,6 +197,7 @@ export default function AccountSubPage() {
                                 ].map(field => (
                                     <div key={field.name} className="w-full">
                                         <Input
+                                            disabled={isSubmitting}
                                             additionalClassName={{
                                                 input: "bg-gray-200 focus:ring-2 focus:ring-orange-600"
                                             }}
@@ -184,6 +208,7 @@ export default function AccountSubPage() {
 
                                 <div className="mt-4 lg:col-span-2 grid grid-cols-1 gap-4">
                                     <Input
+                                        disabled={isSubmitting}
                                         type="submit"
                                         value="Update Password"
                                         additionalClassName={{

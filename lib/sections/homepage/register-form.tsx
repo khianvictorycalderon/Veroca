@@ -19,7 +19,6 @@ export default function RegisterForm({
             first_name: "",
             last_name: "",
             username: "",
-            email: "",
             birth_date: "",
             password: "",
             confirm_password: ""
@@ -40,7 +39,6 @@ export default function RegisterForm({
                     first_name: data.first_name,
                     last_name: data.last_name,
                     username: data.username,
-                    email: data.email,
                     birth_date: data.birth_date,
                     password: data.password
                 });
@@ -78,13 +76,6 @@ export default function RegisterForm({
             label: "Username",
             validate: (value) =>
             value.length >= 3 || "Username must be at least 3 characters"
-        },
-        {
-            name: "email",
-            label: "Email",
-            type: "email",
-            validate: (value) =>
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || "Invalid email address"
         },
         {
             name: "birth_date",

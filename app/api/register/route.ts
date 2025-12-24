@@ -7,7 +7,6 @@ export async function POST(request: NextRequest) {
         first_name, 
         last_name,
         username,
-        email,
         birth_date,
         password
     } = await request.json();
@@ -15,7 +14,6 @@ export async function POST(request: NextRequest) {
     dev.log(`First name: ${first_name}`);
     dev.log(`Last name: ${last_name}`);
     dev.log(`Username: ${username}`);
-    dev.log(`Email: ${email}`);
     dev.log(`Birth date: ${birth_date}`);
     dev.log(`Password: ${password}`);
 

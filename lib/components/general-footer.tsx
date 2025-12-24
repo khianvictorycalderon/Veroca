@@ -31,7 +31,7 @@ export default function GeneralFooter() {
                     content: (
                         <ul className={sectionClassName}>
                             <li>
-                                <a href="https://github.com/khianvictorycalderon" target="_blank" title="Developer's Official Website" className="hover:text-white">
+                                <a href="https://github.com/khianvictorycalderon/Veroca" target="_blank" title="Developer's Official Website" className="hover:text-white">
                                     Project Source Code
                                 </a>
                             </li>

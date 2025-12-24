@@ -70,20 +70,22 @@ export default function AccountSubPage() {
         fetchUserData();
     }, [accountMethods]);
 
+    const [saveErrorMessage, setSaveErrorMessage] = useState<string>("");
     const onSave = async (data: AccountManagementFormData) => {
         setIsSubmitting(true);
+        setSaveErrorMessage("");
 
         await handleAPIRequest(
             async () => {
                 await axios.patch("/api/account/info", data);
                 await fetchUserData();
+                setIsEditing(false);
             },
             "Failed to update account",
-            () => {}, // pass a setErrorMessage if needed
+            setSaveErrorMessage, // pass a setErrorMessage if needed
             async () => {}, // optional error action
             async () => {
                 setIsSubmitting(false)
-                setIsEditing(false);
             }
         );
 
@@ -191,6 +193,7 @@ export default function AccountSubPage() {
                                 )}
                             </form>
                         </FormProvider>
+                        {saveErrorMessage && <BaseText className="text-red-600 text-center mt-2">{saveErrorMessage}</BaseText>}
                     </div>
 
                     <div className="w-full">

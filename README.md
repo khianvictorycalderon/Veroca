@@ -6,10 +6,34 @@ Log in to your account (Register if no account yet), and manage your customer's 
 
 ## To run this project:
 1. Clone this repository `git clone https://github.com/khianvictorycalderon/Veroca.git`
-2. Run `npm install`
-3. Run `npm run dev`
+2. Install postgresql server (if you don't have it yet)
+3. Run the following postgresql query in your local postgresql:
+    ```sql
+    CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+    CREATE TABLE IF NOT EXISTS users (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        first_name TEXT NOT NULL,
+        last_name TEXT NOT NULL,
+        username TEXT NOT NULL UNIQUE,
+        birth_date DATE NOT NULL,
+        password TEXT NOT NULL
+    );
+    ```
+4. Create `.env.local` that contains the following:
+    ```env
+    DATABASE_URL=postgres://<user>:<password>@<host>:<port>/<database_name>
+    ```
+    and replace the DATABASE_URL with you actual database configurations
+5. Run `npm install`
+6. Run `npm run dev`
 
 ---
+
+## Tech Stacks
+- Next.js
+- Tailwind CSS
+- PostgreSQL
 
 ## Dependencies & Configuration
 The following is a list of installed dependencies and configuration settings used in this project.

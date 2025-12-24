@@ -135,10 +135,13 @@ export default function AccountSubPage() {
     const { handleSubmit: handlePasswordSubmit } = passwordMethods;
 
     const [changePassErrorMessage, setChangePassErrorMessage] = useState<string>("");
+    const [changePassSuccessMessage, setChangePassSuccessMessage] = useState<string>("");
     const [isUpdatingPassword, setIsUpdatingPassword] = useState<boolean>(false);
 
     const onChangePassword = async (data: AccountManagementPasswordFormData) => {
         setIsUpdatingPassword(true);
+        setChangePassErrorMessage("");
+        setChangePassSuccessMessage("");
 
         await handleAPIRequest(
             async () => {
@@ -146,6 +149,8 @@ export default function AccountSubPage() {
                     old_password: data.old_password,
                     new_password: data.new_password
                 });
+
+                setChangePassSuccessMessage("Password successfully changed!");
                 passwordMethods.reset();
             },
             "Failed to update password",
@@ -267,6 +272,7 @@ export default function AccountSubPage() {
                             </form>
                         </FormProvider>
                         {changePassErrorMessage && <BaseText className="text-red-600 text-center mt-2">{changePassErrorMessage}</BaseText>}
+                        {changePassSuccessMessage && <BaseText className="text-green-600 text-center mt-2">{changePassSuccessMessage}</BaseText>}
                     </div>
                     
                 </div>

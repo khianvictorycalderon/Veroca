@@ -317,49 +317,49 @@ export default function OrderSubPage() {
                                     <tr
                                         key={index}
                                         className="transition-colors duration-200"
-                                    >
-                                    <td className="p-2">
-                                        <input
-                                        placeholder="Enter customer name..."
-                                        type="text"
-                                        value={customer.customer_name}
-                                        onChange={e =>
-                                            updateCustomerField(index, "customer_name", e.target.value)
-                                        }
-                                        className="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
-                                        />
-                                    </td>
-                                    <td className="p-2">
-                                        <input
-                                        placeholder="Enter customer remarks..."
-                                        type="text"
-                                        value={customer.remarks}
-                                        onChange={e =>
-                                            updateCustomerField(index, "remarks", e.target.value)
-                                        }
-                                        className="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
-                                        />
-                                    </td>
-                                    <td className="p-2">
-                                        <input
-                                        placeholder="Enter order quantity..."
-                                        type="number"
-                                        min={1}
-                                        value={customer.quantity}
-                                        onChange={e =>
-                                            updateCustomerField(index, "quantity", Number(e.target.value))
-                                        }
-                                        className="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
-                                        />
-                                    </td>
-                                    <td className="p-2 text-center">
-                                        <button
-                                        onClick={() => deleteCustomerRow(index)}
-                                        className="text-orange-500 hover:text-orange-700 transition cursor-pointer"
                                         >
-                                        <TiDelete size={24} />
-                                        </button>
-                                    </td>
+                                        <td className="p-2">
+                                            <input
+                                                placeholder="Enter customer name..."
+                                                type="text"
+                                                value={customer.customer_name}
+                                                onChange={e =>
+                                                    updateCustomerField(index, "customer_name", e.target.value)
+                                                }
+                                                className="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+                                            />
+                                        </td>
+                                        <td className="p-2">
+                                            <input
+                                                placeholder="Enter customer remarks..."
+                                                type="text"
+                                                value={customer.remarks}
+                                                onChange={e =>
+                                                    updateCustomerField(index, "remarks", e.target.value)
+                                                }
+                                                className="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+                                            />
+                                        </td>
+                                        <td className="p-2">
+                                            <input
+                                                placeholder="Enter order quantity..."
+                                                type="number"
+                                                min={1}
+                                                value={customer.quantity}
+                                                onChange={e =>
+                                                    updateCustomerField(index, "quantity", Number(e.target.value))
+                                                }
+                                                className="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+                                            />
+                                        </td>
+                                        <td className="p-2 text-center">
+                                            <button
+                                                onClick={() => deleteCustomerRow(index)}
+                                                className="text-orange-500 hover:text-orange-700 transition cursor-pointer"
+                                            >
+                                            <TiDelete size={24} />
+                                            </button>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

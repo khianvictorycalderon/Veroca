@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
   dev.log(`Password: ${password}`);
 
   // Duration of a session
-  const maxDuration = 60 * 60 * 12;
+  const maxDuration = 60 * 60 * 6;
 
   return handleQuery(
     async () => {

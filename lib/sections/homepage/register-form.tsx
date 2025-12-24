@@ -12,9 +12,20 @@ import { FormProvider, useForm } from "react-hook-form";
 export default function RegisterForm({
     setPage
 }: RegisterFormProps) {
+
     const methods = useForm<RegisterFormData>({
-        mode: "onChange"
+        mode: "onChange",
+        defaultValues: {
+            first_name: "",
+            last_name: "",
+            username: "",
+            email: "",
+            birth_date: "",
+            password: "",
+            confirm_password: ""
+        }
     });
+
     const { handleSubmit } = methods;
 
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -33,7 +44,9 @@ export default function RegisterForm({
                     birth_date: data.birth_date,
                     password: data.password
                 });
-               // window.location.reload(); // Refresh for the login session
+
+                // Clears all the input fields
+                methods.reset();
             }, 
             "Failed to register",
             setErrorMessage,

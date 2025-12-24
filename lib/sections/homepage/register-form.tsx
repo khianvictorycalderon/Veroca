@@ -12,7 +12,9 @@ import { FormProvider, useForm } from "react-hook-form";
 export default function RegisterForm({
     setPage
 }: RegisterFormProps) {
-    const methods = useForm<RegisterFormData>();
+    const methods = useForm<RegisterFormData>({
+        mode: "onChange"
+    });
     const { handleSubmit } = methods;
 
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -43,13 +45,67 @@ export default function RegisterForm({
     };
 
     const fields: RegisterFieldProps[] = [
-        { name: "first_name", label: "First Name" },
-        { name: "last_name", label: "Last Name" },
-        { name: "username", label: "Username" },
-        { name: "email", label: "Email", type: "email" },
-        { name: "birth_date", label: "Birth Date", type: "date" },
-        { name: "password", label: "Password", type: "password" },
-        { name: "confirm_password", label: "Confirm Password", type: "password" },
+        {
+            name: "first_name",
+            label: "First Name",
+            validate: (value) =>
+            /^[A-Za-z\s]+$/.test(value) || "First name cannot contain numbers or special characters"
+        },
+        {
+            name: "last_name",
+            label: "Last Name",
+            validate: (value) =>
+            /^[A-Za-z\s]+$/.test(value) || "Last name cannot contain numbers or special characters"
+        },
+        {
+            name: "username",
+            label: "Username",
+            validate: (value) =>
+            value.length >= 3 || "Username must be at least 3 characters"
+        },
+        {
+            name: "email",
+            label: "Email",
+            type: "email",
+            validate: (value) =>
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || "Invalid email address"
+        },
+        {
+            name: "birth_date",
+            label: "Birth Date",
+            type: "date",
+            validate: (value: string) => {
+                if (!value) return "Birth date is required";
+
+                const birthDate = new Date(value);
+                const today = new Date();
+
+                // Calculate age
+                const age = today.getFullYear() - birthDate.getFullYear();
+                const m = today.getMonth() - birthDate.getMonth();
+                const dayDiff = today.getDate() - birthDate.getDate();
+
+                // Adjust if birthday hasn't occurred yet this year
+                const actualAge = m < 0 || (m === 0 && dayDiff < 0) ? age - 1 : age;
+
+                return actualAge >= 12 || "You must be at least 12 years old";
+            }
+        },
+        {
+            name: "password",
+            label: "Password",
+            type: "password",
+            validate: (value) =>
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/.test(value) ||
+            "Password must be at least 8 characters, include uppercase, lowercase, number, and special character"
+        },
+        {
+            name: "confirm_password",
+            label: "Confirm Password",
+            type: "password",
+            validate: (value, getValues) =>
+            value === getValues().password || "Passwords do not match"
+        },
     ];
 
     return (
@@ -64,12 +120,21 @@ export default function RegisterForm({
                         >
                             {fields.map(field => (
                                 <div key={field.name} className={`w-full ${field?.wrapper}`}>
-                                    <Input
-                                        disabled={isSubmitting} 
+                                    <Input<RegisterFormData>
+                                        name={field.name}
+                                        label={field.label}
+                                        type={field.type}
+                                        disabled={isSubmitting}
+                                        registerOptions={{
+                                            required: `${field.label} is required`,
+                                            validate: field.validate
+                                            ? (value: string) => field.validate!(value, methods.getValues)
+                                            : undefined,
+                                        }}
                                         additionalClassName={{
                                             input: "disabled:!text-gray-400 disabled:!bg-gray-300 disabled:!cursor-not-allowed focus:!ring-orange-600"
-                                        }} 
-                                        {...field} />
+                                        }}
+                                    />
                                 </div>
                             ))}
 

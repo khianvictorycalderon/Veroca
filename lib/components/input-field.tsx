@@ -1,27 +1,26 @@
 import React from "react";
-import { useFormContext } from "react-hook-form";
+import { RegisterOptions, useFormContext, FieldValues, Path } from "react-hook-form";
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputProps<TFormValues extends FieldValues> extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
-  name?: string;
+  name?: Path<TFormValues>; // typed name for any form
   additionalClassName?: {
     label?: string;
     input?: string;
     feedback?: string;
   };
+  registerOptions?: RegisterOptions<TFormValues, Path<TFormValues>>;
 }
 
-export const Input: React.FC<InputProps> = ({
+export const Input = <TFormValues extends FieldValues>({
   label,
   name,
   additionalClassName,
-  ...props
-}) => {
+  registerOptions,
+  ...rest
+}: InputProps<TFormValues>) => {
   
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
+  const { register, formState: { errors } } = useFormContext<TFormValues>();
 
   const errorMessage = name && errors[name]?.message as string | undefined;
 
@@ -41,8 +40,8 @@ export const Input: React.FC<InputProps> = ({
           additionalClassName?.input ?? ""
         }`}
         placeholder={label ? `Enter ${label.toLowerCase()}...` : ""}
-        {...(name ? register(name as any, { required: `${label} is required` }) : {})}
-        {...props}
+        {...(name ? register(name as Path<TFormValues>, registerOptions) : {})}
+        {...rest}
       />
       {errorMessage && (
         <p

@@ -36,11 +36,12 @@ export interface RegisterFormData {
 }
 
 export interface RegisterFieldProps {
-  name?: string;
+  name?: keyof RegisterFormData;
   label?: string;
   type?: HTMLInputTypeAttribute;
   wrapper?: string;
   pattern?: string;
+  validate?: (value: string, getValues: () => RegisterFormData) => string | boolean;
 }
 
 export interface RegisterFormProps {

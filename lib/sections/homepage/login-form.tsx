@@ -20,6 +20,7 @@ export default function LoginForm({
 
     const onSubmit = (data: LoginFormData) => {
         setIsSubmitting(true);
+        setErrorMessage("");
 
         handleAPIRequest(
             async () => {
@@ -41,9 +42,22 @@ export default function LoginForm({
     };
 
     const fields: LoginFieldProps[] = [
-        { name: "username", label: "Username" },
-        { name: "password", label: "Password", type: "password" },
+        {
+            name: "username",
+            label: "Username",
+            registerOptions: {
+                required: "Username is required",
+                minLength: { value: 3, message: "Username must be at least 3 characters" }
+            }
+        },
+        {
+            name: "password",
+            label: "Password",
+            type: "password",
+            registerOptions: { required: "Password is required" }
+        }
     ];
+
 
     return (
         <SectionContainer>
@@ -57,7 +71,8 @@ export default function LoginForm({
                         >
                             {fields.map(field => (
                                 <div key={field.name} className={`w-full ${field?.wrapper}`}>
-                                    <Input additionalClassName={{
+                                    <Input
+                                        additionalClassName={{
                                         input: "disabled:!text-gray-400 disabled:!bg-gray-300 disabled:!cursor-not-allowed focus:!ring-orange-600"
                                     }} disabled={isSubmitting} {...field} />
                                 </div>

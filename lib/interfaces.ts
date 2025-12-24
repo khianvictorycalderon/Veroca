@@ -1,5 +1,6 @@
 import { HTMLInputTypeAttribute, SetStateAction } from "react";
 import { HomeAccountSectionType, LoggedInPageType } from "./types";
+import { RegisterOptions } from "react-hook-form";
 
 // -------------------------------------------------------------
 // Login Page interfaces
@@ -10,11 +11,13 @@ export interface LoginFormData {
 }
 
 export interface LoginFieldProps {
-  name?: string;
+  name?: keyof LoginFormData;
   label?: string;
   type?: HTMLInputTypeAttribute;
   wrapper?: string;
   pattern?: string;
+  registerOptions?: RegisterOptions<LoginFormData>;
+  validate?: (value: string, getValues: () => RegisterFormData) => string | boolean;
 }
 
 export interface LoginFormProps {

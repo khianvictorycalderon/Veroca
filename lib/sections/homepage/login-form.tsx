@@ -58,7 +58,7 @@ export default function LoginForm({
                             {fields.map(field => (
                                 <div key={field.name} className={`w-full ${field?.wrapper}`}>
                                     <Input additionalClassName={{
-                                        input: "disabled:!text-gray-400 disabled:!bg-gray-300 focus:ring-orange-600"
+                                        input: "disabled:!text-gray-400 disabled:!bg-gray-300 focus:!ring-orange-600"
                                     }} disabled={isSubmitting} {...field} />
                                 </div>
                             ))}
@@ -69,7 +69,7 @@ export default function LoginForm({
                                 type="submit"
                                 value="Login"
                                 additionalClassName={{
-                                    input: "disabled:!text-gray-400 disabled:!bg-gray-300 !bg-orange-500 hover:!bg-orange-400 cursor-pointer font-semibold !text-white transition duration-300 focus:ring-orange-600",
+                                    input: "disabled:!text-gray-400 disabled:!bg-gray-300 !bg-orange-500 hover:!bg-orange-400 cursor-pointer font-semibold !text-white transition duration-300 focus:!ring-orange-600",
                                 }}
                             />
                             </div>

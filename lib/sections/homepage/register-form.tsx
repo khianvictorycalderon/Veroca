@@ -4,6 +4,9 @@ import { Input } from "@/lib/components/input-field";
 import SectionContainer from "@/lib/components/section-container";
 import { BaseText, HeadingText } from "@/lib/components/typography";
 import { RegisterFieldProps, RegisterFormData, RegisterFormProps } from "@/lib/interfaces";
+import { handleAPIRequest } from "@/utils/req-helper";
+import axios from "axios";
+import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 export default function RegisterForm({
@@ -12,8 +15,31 @@ export default function RegisterForm({
     const methods = useForm<RegisterFormData>();
     const { handleSubmit } = methods;
 
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
+
     const onSubmit = (data: RegisterFormData) => {
-        console.log(data);
+        setIsSubmitting(true);
+
+        handleAPIRequest(
+            async () => {
+                await axios.post("/api/register", {
+                    first_name: data.first_name,
+                    last_name: data.last_name,
+                    username: data.username,
+                    email: data.email,
+                    birth_date: data.birth_date,
+                    password: data.password
+                });
+               // window.location.reload(); // Refresh for the login session
+            }, 
+            "Failed to register",
+            setErrorMessage,
+            async () => {},
+            async () => {
+                setIsSubmitting(false);
+            }
+        );
     };
 
     const fields: RegisterFieldProps[] = [
@@ -38,9 +64,12 @@ export default function RegisterForm({
                         >
                             {fields.map(field => (
                                 <div key={field.name} className={`w-full ${field?.wrapper}`}>
-                                    <Input additionalClassName={{
-                                        input: "focus:!ring-orange-600"
-                                    }} {...field} />
+                                    <Input
+                                        disabled={isSubmitting} 
+                                        additionalClassName={{
+                                            input: "disabled:!text-gray-400 disabled:!bg-gray-300 disabled:!cursor-not-allowed focus:!ring-orange-600"
+                                        }} 
+                                        {...field} />
                                 </div>
                             ))}
 
@@ -48,13 +77,15 @@ export default function RegisterForm({
                                 <Input
                                     type="submit"
                                     value="Register"
+                                    disabled={isSubmitting}
                                     additionalClassName={{
-                                        input: "!bg-orange-500 hover:!bg-orange-400 cursor-pointer font-semibold !text-white transition duration-300 focus:!ring-orange-600",
+                                        input: "disabled:!text-gray-400 disabled:!bg-gray-300 disabled:!cursor-not-allowed !bg-orange-500 hover:!bg-orange-400 cursor-pointer font-semibold !text-white transition duration-300 focus:!ring-orange-600",
                                     }}
                                 />
                             </div>
                         </form>
                     </FormProvider>
+                    {errorMessage && <BaseText className="text-center mt-4 text-red-400">{errorMessage}</BaseText>}
                     <BaseText className="mt-4 text-right">Already have an Account? <button onClick={() => setPage("login")} className="text-orange-600 underline cursor-pointer">Sign-In</button></BaseText>
                 </div>
             </div>

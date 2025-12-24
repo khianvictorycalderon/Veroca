@@ -55,7 +55,10 @@ export default function RegisterForm({
                 setPopUpMessage(
                     <span>
                         You have successfully registered! <br/>
-                        Login your account now!
+                        Login your account now! <br/>
+                        <br/>
+                        <span className="font-bold">WARNING: DO NOT FORGET YOUR PASSWORD</span><br/>
+                        <span className="italic text-sm text-gray-600">This website does not have forget password. Learn more in the <u>Tutorial</u> or <u>About</u>.</span>
                     </span>
                 );
 

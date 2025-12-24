@@ -23,24 +23,4 @@ export async function POST(request: NextRequest) {
         message: "Recieved"
     }, { status: 200 });
 
-    // if (username === "admin" && password == "1234") {
-    //     const response = NextResponse.json({ message: "Login Successful!" }, { status: 200 })
-
-    //     // Set cookie
-    //     response.cookies.set({
-    //         name: "signed_in_user",
-    //         value: sessionID, // This session ID must match user ID on database for actual implementation
-    //         path: "/",
-    //         httpOnly: true,
-    //         maxAge: 3600,
-    //         sameSite: "lax"
-    //     });
-
-    //     return response;
-    // }
-
-    // return NextResponse.json({
-    //     message: "User doesn't exist or bad request"
-    // }, { status: 401 });
-
 }

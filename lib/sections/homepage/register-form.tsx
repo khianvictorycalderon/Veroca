@@ -38,7 +38,9 @@ export default function RegisterForm({
                         >
                             {fields.map(field => (
                                 <div key={field.name} className={`w-full ${field?.wrapper}`}>
-                                    <Input {...field} />
+                                    <Input additionalClassName={{
+                                        input: "focus:!ring-orange-600"
+                                    }} {...field} />
                                 </div>
                             ))}
 
@@ -47,7 +49,7 @@ export default function RegisterForm({
                                     type="submit"
                                     value="Register"
                                     additionalClassName={{
-                                        input: "!bg-orange-500 hover:!bg-orange-400 cursor-pointer font-semibold !text-white transition duration-300",
+                                        input: "!bg-orange-500 hover:!bg-orange-400 cursor-pointer font-semibold !text-white transition duration-300 focus:ring-orange-600",
                                     }}
                                 />
                             </div>

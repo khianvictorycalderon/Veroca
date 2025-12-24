@@ -320,6 +320,7 @@ export default function OrderSubPage() {
                                     >
                                     <td className="p-2">
                                         <input
+                                        placeholder="Enter customer name..."
                                         type="text"
                                         value={customer.customer_name}
                                         onChange={e =>
@@ -330,6 +331,7 @@ export default function OrderSubPage() {
                                     </td>
                                     <td className="p-2">
                                         <input
+                                        placeholder="Enter customer remarks..."
                                         type="text"
                                         value={customer.remarks}
                                         onChange={e =>
@@ -340,6 +342,7 @@ export default function OrderSubPage() {
                                     </td>
                                     <td className="p-2">
                                         <input
+                                        placeholder="Enter order quantity..."
                                         type="number"
                                         min={1}
                                         value={customer.quantity}

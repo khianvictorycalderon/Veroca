@@ -13,6 +13,9 @@ export async function POST(request: NextRequest) {
   dev.log(`Username: ${username}`);
   dev.log(`Password: ${password}`);
 
+  // Duration of a session
+  const maxDuration = 60; // in seconds
+
   return handleQuery(
     async () => {
       // Find user in database
@@ -44,7 +47,7 @@ export async function POST(request: NextRequest) {
 
       // Optional: store in user_sessions table (recommended)
       const expiresAt = new Date();
-      expiresAt.setDate(expiresAt.getDate() + 1); // expires in 1 day
+      expiresAt.setSeconds(expiresAt.getSeconds() + maxDuration);
 
       await pool.query(
         `INSERT INTO user_sessions (user_id, session_token, expires_at)
@@ -61,7 +64,7 @@ export async function POST(request: NextRequest) {
         path: "/",
         sameSite: "lax",
         secure: process.env.NODE_ENV === "production",
-        maxAge: 60 // * 60 * 24, // 1 day
+        maxAge: maxDuration
       });
 
       return response;

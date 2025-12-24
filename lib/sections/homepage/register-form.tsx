@@ -47,6 +47,9 @@ export default function RegisterForm({
 
                 // Clears all the input fields
                 methods.reset();
+
+                // Clears out any error (if there is any)
+                setErrorMessage("");
             }, 
             "Failed to register",
             setErrorMessage,

@@ -3,7 +3,7 @@ import GeneralFooter from "@/lib/components/general-footer";
 import { Input } from "@/lib/components/input-field";
 import SectionContainer from "@/lib/components/section-container";
 import { BaseText, HeadingText } from "@/lib/components/typography";
-import { AccountManagementFieldProps, AccountManagementFormData, AccountManagementPasswordFormData, LoginFormData } from "@/lib/interfaces";
+import { AccountManagementFieldProps, AccountManagementFormData, AccountManagementPasswordFieldProps, AccountManagementPasswordFormData } from "@/lib/interfaces";
 import { handleAPIRequest } from "@/utils/req-helper";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -101,12 +101,36 @@ export default function AccountSubPage() {
     // ---------------------------------------------------------
     // Password Management
     const passwordMethods = useForm<AccountManagementPasswordFormData>({
+        mode: "onChange",
         defaultValues: {
             old_password: "",
             new_password: "",
             confirm_password: ""
         }
     });
+
+    const constChangePasswordFields: AccountManagementPasswordFieldProps[] = [
+        { 
+            name: "old_password",
+            label: "Old Password",
+            type: "password"
+        },
+        { 
+            name: "new_password",
+            label: "New Password",
+            type: "password",
+            validate: (value) =>
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/.test(value) ||
+                "Password must be at least 8 characters, include uppercase, lowercase, number, and special character"
+        },
+        { 
+            name: "confirm_password",
+            label: "Confirm New Password",
+            type: "password",
+            validate: (value, getValues) =>
+                value === getValues().new_password || "Passwords do not match"
+        },
+    ]
 
     const { handleSubmit: handlePasswordSubmit } = passwordMethods;
 
@@ -118,7 +142,10 @@ export default function AccountSubPage() {
 
         await handleAPIRequest(
             async () => {
-                await axios.post("/api/account/password", data);
+                await axios.post("/api/account/password", {
+                    old_password: data.old_password,
+                    new_password: data.new_password
+                });
                 passwordMethods.reset();
             },
             "Failed to update password",
@@ -162,9 +189,11 @@ export default function AccountSubPage() {
                             >
                                 {fields.map(field => (
                                     <div key={field.name} className={`w-full ${field?.wrapper}`}>
-                                        <Input additionalClassName={{
-                                            input: "disabled:cursor-not-allowed disabled:!text-neutral-950 disabled:!bg-gray-300 bg-gray-200 focus:ring-2 focus:ring-orange-600"
-                                        }} disabled={!isEditing || isSubmitting} {...field} />
+                                        <Input 
+                                            additionalClassName={{
+                                                input: "disabled:cursor-not-allowed disabled:!text-neutral-950 disabled:!bg-gray-300 bg-gray-200 focus:ring-2 focus:ring-orange-600"
+                                            }} 
+                                            disabled={!isEditing || isSubmitting} {...field} />
                                     </div>
                                 ))}
 
@@ -207,14 +236,16 @@ export default function AccountSubPage() {
                                 onSubmit={handlePasswordSubmit(onChangePassword)}
                                 className="text-neutral-950 grid grid-cols-1 lg:grid-cols-2 mt-8 gap-4 flex-1 w-full"
                             >
-                                {[
-                                    { name: "old_password", label: "Old Password", type: "password" },
-                                    { name: "new_password", label: "New Password", type: "password" },
-                                    { name: "confirm_password", label: "Confirm New Password", type: "password" },
-                                ].map(field => (
+                                {constChangePasswordFields.map(field => (
                                     <div key={field.name} className="w-full">
                                         <Input
                                             disabled={isUpdatingPassword}
+                                            registerOptions={{
+                                                required: `${field.label} is required`,
+                                                validate: field.validate
+                                                ? (value: string) => field.validate!(value, passwordMethods.getValues)
+                                                : undefined,
+                                            }}
                                             additionalClassName={{
                                                 input: "disabled:cursor-not-allowed disabled:!text-neutral-950 disabled:!bg-gray-300 bg-gray-200 focus:ring-2 focus:ring-orange-600"
                                             }}

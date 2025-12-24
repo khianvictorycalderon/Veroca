@@ -69,18 +69,28 @@ export interface AccountManagementFormData {
   birth_date: string;
 }
 
-export interface AccountManagementPasswordFormData {
-  old_password: string;
-  new_password: string;
-  confirm_password: string;
-}
-
 export interface AccountManagementFieldProps {
   name?: string;
   label?: string;
   type?: HTMLInputTypeAttribute;
   wrapper?: string;
   pattern?: string;
+  validate?: (value: string, getValues: () => AccountManagementFormData) => string | boolean;
+}
+
+export interface AccountManagementPasswordFormData {
+  old_password: string;
+  new_password: string;
+  confirm_password: string;
+}
+
+export interface AccountManagementPasswordFieldProps {
+  name?: string;
+  label?: string;
+  type?: HTMLInputTypeAttribute;
+  wrapper?: string;
+  pattern?: string;
+  validate?: (value: string, getValues: () => AccountManagementPasswordFormData) => string | boolean;
 }
 // -------------------------------------------------------------
 
@@ -101,11 +111,4 @@ export interface OrderManagementCustomerRefs {
   quantity: HTMLInputElement | null;
   remarks: HTMLInputElement | null;
 };
-
-// id: "ORD005",
-//             name: "Waffles - Tomorrow",
-//             details: [
-//                 { customer_name: "Jane Smith", quantity: 4, remarks: "" },
-//                 { customer_name: "Bob Lee", quantity: 2, remarks: "Urgent" },
-//             ]
 // -------------------------------------------------------------

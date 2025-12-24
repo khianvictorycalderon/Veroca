@@ -17,7 +17,8 @@ Log in to your account (Register if no account yet), and manage your customer's 
         last_name TEXT NOT NULL,
         username TEXT NOT NULL UNIQUE,
         birth_date DATE NOT NULL,
-        password TEXT NOT NULL
+        password TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT NOW()
     );
 
     CREATE TABLE IF NOT EXISTS user_sessions (

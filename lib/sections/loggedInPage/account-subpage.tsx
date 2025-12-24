@@ -2,7 +2,7 @@
 import GeneralFooter from "@/lib/components/general-footer";
 import { Input } from "@/lib/components/input-field";
 import SectionContainer from "@/lib/components/section-container";
-import { HeadingText } from "@/lib/components/typography";
+import { BaseText, HeadingText } from "@/lib/components/typography";
 import { AccountManagementFieldProps, AccountManagementFormData, AccountManagementPasswordFormData } from "@/lib/interfaces";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -12,8 +12,6 @@ export default function AccountSubPage() {
     const accountInputFieldDefaultValues = {
         first_name: "John",
         last_name: "Doe",
-        username: "JohnDoe123",
-        email: "johndoe@gmail.com",
         birth_date: "2003-03-02"
     }
 
@@ -39,8 +37,6 @@ export default function AccountSubPage() {
     const fields: AccountManagementFieldProps[] = [
         { name: "first_name", label: "First Name" },
         { name: "last_name", label: "Last Name" },
-        { name: "username", label: "Username" },
-        { name: "email", label: "Email", type: "email" },
         { name: "birth_date", label: "Birth Date", type: "date" }
     ];
     // ---------------------------------------------------------
@@ -73,6 +69,12 @@ export default function AccountSubPage() {
                     
                     <div className="w-full">
                         <HeadingText className="text-center text-neutral-800">Manage your Account</HeadingText>
+                        
+                        <div className="my-4">
+                            <BaseText><span className="font-bold">Username</span>: <span className="underline">JohnDoe123</span></BaseText>
+                            <BaseText className="italic">NOTE: Username cannot be changed after creating an account.</BaseText>
+                        </div>
+                        
                         <FormProvider {...accountMethods}>
                             <form
                                 onSubmit={handleSubmit(onSave)}

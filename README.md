@@ -19,6 +19,17 @@ Log in to your account (Register if no account yet), and manage your customer's 
         birth_date DATE NOT NULL,
         password TEXT NOT NULL
     );
+
+    CREATE TABLE IF NOT EXISTS user_sessions (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        session_token TEXT NOT NULL UNIQUE,
+        created_at TIMESTAMP DEFAULT NOW(),
+        expires_at TIMESTAMP NOT NULL,
+        user_agent TEXT,
+        ip_address TEXT
+    );
+
     ```
 4. Create `.env.local` that contains the following:
     ```env

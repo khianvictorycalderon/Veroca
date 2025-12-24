@@ -129,7 +129,7 @@ export default function AccountSubPage() {
                             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                                 <div>
                                 <BaseText className="text-sm text-gray-600">Username</BaseText>
-                                <BaseText className="font-semibold text-lg text-neutral-800 underline">{fetchedUserData.username}</BaseText>
+                                <BaseText className="font-semibold text-lg text-neutral-800 underline">{fetchedUserData.username || "Loading..."}</BaseText>
                                 </div>
                                 <div className="sm:text-right">
                                 <BaseText className="text-xs italic text-gray-500">

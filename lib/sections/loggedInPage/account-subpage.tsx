@@ -82,7 +82,7 @@ export default function AccountSubPage() {
                 setIsEditing(false);
             },
             "Failed to update account",
-            setSaveErrorMessage, // pass a setErrorMessage if needed
+            setSaveErrorMessage,
             async () => {}, // optional error action
             async () => {
                 setIsSubmitting(false)
@@ -110,20 +110,24 @@ export default function AccountSubPage() {
 
     const { handleSubmit: handlePasswordSubmit } = passwordMethods;
 
+    const [changePassErrorMessage, setChangePassErrorMessage] = useState<string>("");
+    const [isUpdatingPassword, setIsUpdatingPassword] = useState<boolean>(false);
+
     const onChangePassword = async (data: AccountManagementPasswordFormData) => {
+        setIsUpdatingPassword(true);
+
         await handleAPIRequest(
             async () => {
                 await axios.post("/api/account/password", data);
+                passwordMethods.reset();
             },
             "Failed to update password",
-            () => {}, // pass a setErrorMessage if needed
+            setChangePassErrorMessage,
             async () => {}, // optional error action
             async () => {
-                setIsSubmitting(false)
-                setIsEditing(false);
+                setIsUpdatingPassword(false);
             }
         );
-        passwordMethods.reset();
     };
 
     // ---------------------------------------------------------
@@ -210,9 +214,9 @@ export default function AccountSubPage() {
                                 ].map(field => (
                                     <div key={field.name} className="w-full">
                                         <Input
-                                            disabled={isSubmitting}
+                                            disabled={isUpdatingPassword}
                                             additionalClassName={{
-                                                input: "bg-gray-200 focus:ring-2 focus:ring-orange-600"
+                                                input: "disabled:cursor-not-allowed disabled:!text-neutral-950 disabled:!bg-gray-300 bg-gray-200 focus:ring-2 focus:ring-orange-600"
                                             }}
                                             {...field}
                                         />
@@ -221,16 +225,17 @@ export default function AccountSubPage() {
 
                                 <div className="mt-4 lg:col-span-2 grid grid-cols-1 gap-4">
                                     <Input
-                                        disabled={isSubmitting}
+                                        disabled={isUpdatingPassword}
                                         type="submit"
                                         value="Update Password"
                                         additionalClassName={{
-                                            input: "!bg-amber-500 hover:!bg-amber-400 cursor-pointer font-semibold !text-white transition duration-300 !ring-0",
+                                            input: "disabled:cursor-not-allowed disabled:!text-neutral-950 disabled:!bg-gray-300 !bg-amber-500 hover:!bg-amber-400 cursor-pointer font-semibold !text-white transition duration-300 !ring-0",
                                         }}
                                     />
                                 </div>
                             </form>
                         </FormProvider>
+                        {changePassErrorMessage && <BaseText className="text-red-600 text-center mt-2">{changePassErrorMessage}</BaseText>}
                     </div>
                     
                 </div>

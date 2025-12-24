@@ -143,6 +143,7 @@ export default function RegisterForm({
             <div className="py-4 md:py-8 lg:py-16 min-h-[70vh] flex flex-col items-center justify-center">
                 <div className="w-full">
                     <HeadingText className="text-center text-neutral-800">Create an Account</HeadingText>
+                    <BaseText className="italic text-gray-600 text-center">NOTE: Username cannot be changed once an account was created.</BaseText>
                     <FormProvider {...methods}>
                         <form
                             onSubmit={handleSubmit(onSubmit)}

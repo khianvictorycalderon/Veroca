@@ -68,13 +68,22 @@ export default function AccountSubPage() {
                 <div className="py-4 md:py-8 lg:py-16 min-h-[100vh] flex flex-col items-center justify-center gap-16">
                     
                     <div className="w-full">
-                        <HeadingText className="text-center text-neutral-800">Manage your Account</HeadingText>
+                        <HeadingText className="text-center text-neutral-800 mt-8 lg:mt-0">Manage your Account</HeadingText>
                         
-                        <div className="my-4">
-                            <BaseText><span className="font-bold">Username</span>: <span className="underline">JohnDoe123</span></BaseText>
-                            <BaseText className="italic">NOTE: Username cannot be changed after creating an account.</BaseText>
+                        <div className="w-full bg-white p-4 rounded-lg shadow-sm border border-gray-200 mt-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                <div>
+                                <BaseText className="text-sm text-gray-600">Username</BaseText>
+                                <BaseText className="font-semibold text-lg text-neutral-800 underline">{/* dynamically */}JohnDoe123</BaseText>
+                                </div>
+                                <div className="sm:text-right">
+                                <BaseText className="text-xs italic text-gray-500">
+                                    NOTE: Username cannot be changed after creating an account.
+                                </BaseText>
+                                </div>
+                            </div>
                         </div>
-                        
+
                         <FormProvider {...accountMethods}>
                             <form
                                 onSubmit={handleSubmit(onSave)}

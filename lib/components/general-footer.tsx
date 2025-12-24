@@ -11,7 +11,7 @@ export default function GeneralFooter() {
     return (
         <Footer
             
-            className="!bg-neutral-950 !border-none"
+            className="!bg-neutral-800 !border-none"
             logo="icons/Khian_Icon_Logo.png"
             texts={[
                 {
@@ -21,6 +21,18 @@ export default function GeneralFooter() {
                             <li>
                                 <a href="https://khian.netlify.app" target="_blank" title="Developer's Official Website" className="hover:text-white">
                                     Khian Victory D. Calderon
+                                </a>
+                            </li>
+                        </ul>
+                    ),
+                },
+                {
+                    title: "Resource",
+                    content: (
+                        <ul className={sectionClassName}>
+                            <li>
+                                <a href="https://github.com/khianvictorycalderon" target="_blank" title="Developer's Official Website" className="hover:text-white">
+                                    Project Source Code
                                 </a>
                             </li>
                         </ul>

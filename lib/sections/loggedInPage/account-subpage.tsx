@@ -108,9 +108,19 @@ export default function AccountSubPage() {
 
     const { handleSubmit: handlePasswordSubmit } = passwordMethods;
 
-    const onChangePassword = (data: AccountManagementPasswordFormData) => {
-        console.log("Password change:", data);
-        alert("Password changed!");
+    const onChangePassword = async (data: AccountManagementPasswordFormData) => {
+        await handleAPIRequest(
+            async () => {
+                await axios.post("/api/account/password", data);
+            },
+            "Failed to update password",
+            () => {}, // pass a setErrorMessage if needed
+            async () => {}, // optional error action
+            async () => {
+                setIsSubmitting(false)
+                setIsEditing(false);
+            }
+        );
         passwordMethods.reset();
     };
 

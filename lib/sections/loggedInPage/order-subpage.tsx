@@ -1,20 +1,32 @@
 'use client'
 
+import { MessagePopUp } from "@/lib/components/pop-up";
 import { BaseText, HeadingText } from "@/lib/components/typography";
 import { OrderManagementCustomerRefs, OrderManagementOrderListProps } from "@/lib/interfaces";
 import { useEffect, useRef, useState } from "react";
 import { TiDelete } from "react-icons/ti";
 
 export default function OrderSubPage() {
+    const [popUpMessage, setPopUpMessage] = useState<string>("");
     
     // ----------------------------------------------------------
     // Add order part
     const addOrderName = useRef<HTMLInputElement>(null);
 
-    const handleSubmit = () => {
-        if (addOrderName.current) {
-            console.log("New Order Name:", addOrderName.current.value);
+    const handleAddNewOrder = () => {
+
+        if(!addOrderName.current) {
+            console.error("Order name has undefined or null value.");
+            return;
         }
+
+        if(addOrderName.current?.value.trim() == "") {
+            setPopUpMessage("Please enter an order name.");
+            return;
+        }
+
+        // Add order logic here...
+        addOrderName.current.value = "";
     };
     // ----------------------------------------------------------
 
@@ -136,6 +148,13 @@ export default function OrderSubPage() {
 
     return (
         <div className="lg:flex lg:flex-row w-full bg-gray-50">
+
+            {popUpMessage && (
+                <MessagePopUp
+                    message={popUpMessage}
+                    onClose={() => setPopUpMessage("")}
+                />
+            )}
             
             {/* Add Order Section + View Order */}
             <div className="lg:flex-1/4 h-[80vh] lg:h-[100vh] flex flex-col text-white">
@@ -151,7 +170,7 @@ export default function OrderSubPage() {
                                 className="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
                             />
                             <button
-                                onClick={handleSubmit}
+                                onClick={handleAddNewOrder}
                                 className="px-4 py-2 bg-orange-400 text-white font-semibold rounded-lg hover:bg-orange-700 transition cursor-pointer"
                             >Add</button>
                         </div>

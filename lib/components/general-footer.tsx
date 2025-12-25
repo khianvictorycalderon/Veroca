@@ -23,6 +23,11 @@ export default function GeneralFooter() {
                                     Khian Victory D. Calderon
                                 </a>
                             </li>
+                            <li>
+                                <a href="https://khianvictorycalderon.github.io/donation/donate.html" target="_blank" title="Developer's Official Donation Page" className="hover:text-white">
+                                    Donate
+                                </a>
+                            </li>
                         </ul>
                     ),
                 },

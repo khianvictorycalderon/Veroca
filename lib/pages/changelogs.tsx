@@ -9,6 +9,13 @@ export default function ChangelogsPage() {
 
     const changelogs = [
         {
+            release: "1.0.1",
+            info: [
+                "Released shortly after 1.0.0 at approximately 3:38 PM",
+                "Added footer donation page"
+            ]
+        },
+        {
             release: "1.0.0",
             info: [
                 "Released officially December 25, 2025 at 2:20 PM (PH Time)",

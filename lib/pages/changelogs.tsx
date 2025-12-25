@@ -11,8 +11,8 @@ export default function ChangelogsPage() {
         {
             release: "1.0.0",
             info: [
-                "Released on December 25, 2025",
-                "Initial version of Veroca",
+                "Released officially December 25, 2025 at 2:20 PM (PH Time)",
+                "Initial release of Veroca",
                 "Basic order and account management functionality"
             ]
         }

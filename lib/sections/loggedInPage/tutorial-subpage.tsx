@@ -18,7 +18,7 @@ export default function TutorialSubPage() {
                 <div className="bg-white p-6 rounded-lg shadow border border-gray-200">
                     <SubHeadingText className="text-orange-500">Access Orders</SubHeadingText>
                     <BaseText className="mt-2 text-gray-700">
-                        Click the <span className="font-semibold text-orange-600">Orders</span> tab from the sidebar. Here you can see all your existing orders and manage tomorrow's customer list.
+                        Click the <span className="font-semibold text-orange-600">Orders</span> tab from the sidebar. Here you can see all your existing orders and manage tomorrow&apos;s customer list.
                     </BaseText>
                 </div>
 

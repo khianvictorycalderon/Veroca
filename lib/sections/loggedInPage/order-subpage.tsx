@@ -97,7 +97,7 @@ export default function OrderSubPage() {
     };
 
     // Update customer field
-    const updateCustomerField = (index: number, field: keyof typeof currentCustomers[0], value: any) => {
+    const updateCustomerField = (index: number, field: keyof typeof currentCustomers[0], value: string | number) => {
         setCurrentCustomers(prev => {
             const newArr = [...prev];
             newArr[index] = { ...newArr[index], [field]: value };

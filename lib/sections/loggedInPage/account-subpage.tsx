@@ -7,7 +7,7 @@ import { BaseText, HeadingText } from "@/lib/components/typography";
 import { AccountManagementFieldProps, AccountManagementFormData, AccountManagementPasswordFieldProps, AccountManagementPasswordFormData } from "@/lib/interfaces";
 import { handleAPIRequest } from "@/utils/req-helper";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 export default function AccountSubPage() {
@@ -44,32 +44,31 @@ export default function AccountSubPage() {
     })
 
     // Fetch 
-    async function fetchUserData() {
+    const fetchUserData = useCallback(async () => {
         await handleAPIRequest(
-        async () => {
+            async () => {
             const res = await axios.get("/api/account/info");
             const userData: AccountManagementFormData = res.data;
 
-            // Normalize birth_date to YYYY-MM-DD string
             if (userData.birth_date) {
                 const date = new Date(userData.birth_date);
-                userData.birth_date = date.toLocaleDateString("en-CA"); // YYYY-MM-DD
+                userData.birth_date = date.toLocaleDateString("en-CA");
             }
 
-            setFecthedUserData(userData)
+            setFecthedUserData(userData);
             accountMethods.reset(userData);
-        },
-        "Failed to retrieve user data",
-        () => {}, // optional setState for error handling
-        async () => {}, // optional errAction
-        async () => {}  // optional finally
+            },
+            "Failed to retrieve user data",
+            () => {},
+            async () => {},
+            async () => {}
         );
-    }
+    }, [accountMethods]);
 
     // On page load, fetch user data
     useEffect(() => {
         fetchUserData();
-    }, [accountMethods]);
+    }, [fetchUserData]);
 
     const [saveErrorMessage, setSaveErrorMessage] = useState<string>("");
     const onSave = async (data: AccountManagementFormData) => {

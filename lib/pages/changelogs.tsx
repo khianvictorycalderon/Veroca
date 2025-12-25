@@ -27,7 +27,7 @@ export default function ChangelogsPage() {
 
                     <HeadingText className="text-center text-neutral-800">Changelogs</HeadingText>
                     <BaseText className="text-center text-gray-600 italic">
-                        See what's new in each version of Veroca
+                        See what&apos;s new in each version of Veroca
                     </BaseText>
 
                     {changelogs.map((log, index) => (

@@ -30,8 +30,8 @@ export async function GET(req: NextRequest) {
     const userData = result.rows[0];
     dev.log(`Success: Retrieved user info for session ${sessionToken}`);
     return NextResponse.json(userData, { status: 200 });
-  } catch (err: any) {
-    dev.log(`Failed: ${err.message}`);
+  } catch (err: unknown) {
+    dev.log(`Failed: ${String(err)}`);
     return NextResponse.json({ message: "Failed to retrieve user info" }, { status: 500 });
   }
 }

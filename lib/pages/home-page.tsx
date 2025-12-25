@@ -14,7 +14,9 @@ export default function HomePage() {
     const [accountSection, setAccountSection] = useState<HomeAccountSectionType>("login");
 
     const CTAButton = [
-        <button onClick={() => slideTo("home-page-account-section", -80)} className="text-md md:text-lg lg:text-xl font-semibold tracking-wider bg-orange-500 hover:bg-orange-400 px-16 py-4 rounded-md shadow transition duration-300 cursor-pointer">
+        <button 
+            key={"cta-get-started"}
+            onClick={() => slideTo("home-page-account-section", -80)} className="text-md md:text-lg lg:text-xl font-semibold tracking-wider bg-orange-500 hover:bg-orange-400 px-16 py-4 rounded-md shadow transition duration-300 cursor-pointer">
             GET STARTED!
         </button>
     ]

@@ -34,8 +34,8 @@ export async function GET(req: NextRequest) {
 
     dev.log(`Success: Retrieved orders for user ${userId}`);
     return NextResponse.json({ message: "Orders retrieved successfully", data: ordersResult.rows }, { status: 200 });
-  } catch (err: any) {
-    dev.log(`Failed: ${err.message}`);
+  } catch (err: unknown) {
+    dev.log(`Failed: ${String(err)}`);
     return NextResponse.json({ message: "Failed to retrieve orders" }, { status: 500 });
   }
 }

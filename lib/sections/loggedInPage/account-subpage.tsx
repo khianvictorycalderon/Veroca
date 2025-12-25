@@ -325,7 +325,7 @@ export default function AccountSubPage() {
                         {changePassSuccessMessage && <BaseText className="text-green-600 text-center mt-2">{changePassSuccessMessage}</BaseText>}
                     </div>
 
-                    <div className="w-full">
+                    <div className="w-full mb-4">
                         <HeadingText className="text-center text-neutral-800">Account Deletion</HeadingText>
                         <button 
                             disabled={isDeletingAccount}

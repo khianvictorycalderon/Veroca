@@ -34,8 +34,8 @@ export default function GeneralNavbar() {
       className: buttonsClassName
     },
     {
-      label: "Contact",
-      action: () => router.push("/contact"),
+      label: "Contact Me",
+      action: () => window.location.href = "https://khian.netlify.app",
       className: buttonsClassName
     },
   ];

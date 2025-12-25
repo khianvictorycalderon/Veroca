@@ -109,7 +109,7 @@ export default function AccountSubPage() {
         }
     });
 
-    const constChangePasswordFields: AccountManagementPasswordFieldProps[] = [
+    const changePasswordFields: AccountManagementPasswordFieldProps[] = [
         { 
             name: "old_password",
             label: "Old Password",
@@ -241,23 +241,29 @@ export default function AccountSubPage() {
                                 onSubmit={handlePasswordSubmit(onChangePassword)}
                                 className="text-neutral-950 grid grid-cols-1 lg:grid-cols-2 mt-8 gap-4 flex-1 w-full"
                             >
-                                {constChangePasswordFields.map(field => (
-                                    <div key={field.name} className="w-full">
+                                {changePasswordFields.map(field => {
+                                    const { validate, ...rest } = field;   // strip it out
+
+                                    return (
+                                        <div key={field.name} className="w-full">
                                         <Input
                                             disabled={isUpdatingPassword}
                                             registerOptions={{
-                                                required: `${field.label} is required`,
-                                                validate: field.validate
-                                                ? (value: string) => field.validate!(value, passwordMethods.getValues)
+                                            required: `${field.label} is required`,
+                                            validate: validate
+                                                ? (value: string) =>
+                                                    validate(value, passwordMethods.getValues)
                                                 : undefined,
                                             }}
                                             additionalClassName={{
-                                                input: "disabled:cursor-not-allowed disabled:!text-neutral-950 disabled:!bg-gray-300 bg-gray-200 focus:ring-2 focus:ring-orange-600"
+                                            input:
+                                                "disabled:cursor-not-allowed disabled:!text-neutral-950 disabled:!bg-gray-300 bg-gray-200 focus:ring-2 focus:ring-orange-600",
                                             }}
-                                            {...field}
+                                            {...rest}
                                         />
-                                    </div>
-                                ))}
+                                        </div>
+                                    );
+                                })}
 
                                 <div className="mt-4 lg:col-span-2 grid grid-cols-1 gap-4">
                                     <Input

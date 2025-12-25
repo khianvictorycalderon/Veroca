@@ -280,10 +280,14 @@ export default function AccountSubPage() {
                         {changePassErrorMessage && <BaseText className="text-red-600 text-center mt-2">{changePassErrorMessage}</BaseText>}
                         {changePassSuccessMessage && <BaseText className="text-green-600 text-center mt-2">{changePassSuccessMessage}</BaseText>}
                     </div>
-                </div>
 
-                <div className="w-full">
-                    <HeadingText className="text-center text-neutral-800">Account Deletion</HeadingText>
+                    <div className="w-full">
+                        <HeadingText className="text-center text-neutral-800">Account Deletion</HeadingText>
+                        <button className="w-full px-6 py-2 bg-red-600 hover:bg-red-500 text-white font-bold mt-6 rounded-md shadow transition duration-300 cursor-pointer">
+                            Delete my Account
+                        </button>
+                    </div>
+
                 </div>
 
             </SectionContainer>

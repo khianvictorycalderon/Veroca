@@ -8,27 +8,6 @@ import { TiDelete } from "react-icons/ti";
 
 export default function OrderSubPage() {
     const [popUpMessage, setPopUpMessage] = useState<string>("");
-    
-    // ----------------------------------------------------------
-    // Add order part
-    const addOrderName = useRef<HTMLInputElement>(null);
-
-    const handleAddNewOrder = () => {
-
-        if(!addOrderName.current) {
-            console.error("Order name has undefined or null value.");
-            return;
-        }
-
-        if(addOrderName.current?.value.trim() == "") {
-            setPopUpMessage("Please enter an order name.");
-            return;
-        }
-
-        // Add order logic here...
-        addOrderName.current.value = "";
-    };
-    // ----------------------------------------------------------
 
     // ----------------------------------------------------------
     // Order list/view part
@@ -84,6 +63,40 @@ export default function OrderSubPage() {
             : text;
     };
 
+    // ----------------------------------------------------------
+
+    // ----------------------------------------------------------
+    // Add order part
+    const addOrderName = useRef<HTMLInputElement>(null);
+
+    const handleAddNewOrder = () => {
+        const input = addOrderName.current;
+
+        if (!input) {
+            console.error("Order input is undefined or null.");
+            return;
+        }
+
+        const name = input.value.trim();
+
+        if (name === "") {
+            setPopUpMessage("Please enter an order name.");
+            return;
+        }
+
+        // Simulating...
+        setOrderItems(prevItems => [
+            ...prevItems,
+            {
+                id: (prevItems.length + 1).toString().padStart(5, "0"), // generates unique ID like "00001", "00002", ...
+                name,
+                customers: []
+            }
+        ]);
+
+        // Clear the input
+        input.value = "";
+    };
     // ----------------------------------------------------------
 
     // ----------------------------------------------------------

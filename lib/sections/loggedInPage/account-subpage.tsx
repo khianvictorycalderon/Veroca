@@ -1,6 +1,7 @@
 'use client'
 import GeneralFooter from "@/lib/components/general-footer";
 import { Input } from "@/lib/components/input-field";
+import { PromptPopUp } from "@/lib/components/pop-up";
 import SectionContainer from "@/lib/components/section-container";
 import { BaseText, HeadingText } from "@/lib/components/typography";
 import { AccountManagementFieldProps, AccountManagementFormData, AccountManagementPasswordFieldProps, AccountManagementPasswordFormData } from "@/lib/interfaces";
@@ -164,8 +165,38 @@ export default function AccountSubPage() {
 
     // ---------------------------------------------------------
 
+    // ---------------------------------------------------------
+    // Account Deletion
+    const [deleteAccountInput, setDeleteAccountInput] = useState<string>("");
+    const [isDeleteAccountPopUpShown, setIsDeleteAccountPopUpShown] = useState<boolean>(false);
+    
+    const handleOnCloseDeleteAccountPopUp = () => {
+        
+        setIsDeleteAccountPopUpShown(false);
+        
+        if (deleteAccountInput == "delete my account") {
+            alert("Account deleted!");
+        }
+
+        setDeleteAccountInput("")
+    }
+    // ---------------------------------------------------------
+
     return (
         <>
+            {isDeleteAccountPopUpShown && (
+                <PromptPopUp
+                    message={<>
+                        <span>Type <b><u>delete my account</u></b> to permanently delete your account.</span><br/>
+                        <br/>
+                        <span className="italic text-sm text-gray-600">WARNING: Account cannot be restored once deleted.</span>
+                    </>}
+                    value={deleteAccountInput}
+                    setValue={setDeleteAccountInput}
+                    onClose={handleOnCloseDeleteAccountPopUp}
+                />
+            )}
+
             <SectionContainer className="bg-gray-50">
                 
                 <div className="py-4 md:py-8 lg:py-16 min-h-[100vh] flex flex-col items-center justify-center gap-16">
@@ -283,7 +314,7 @@ export default function AccountSubPage() {
 
                     <div className="w-full">
                         <HeadingText className="text-center text-neutral-800">Account Deletion</HeadingText>
-                        <button className="w-full px-6 py-2 bg-red-600 hover:bg-red-500 text-white font-bold mt-6 rounded-md shadow transition duration-300 cursor-pointer">
+                        <button onClick={() => setIsDeleteAccountPopUpShown(true)} className="w-full px-6 py-2 bg-red-600 hover:bg-red-500 text-white font-bold mt-6 rounded-md shadow transition duration-300 cursor-pointer">
                             Delete my Account
                         </button>
                     </div>

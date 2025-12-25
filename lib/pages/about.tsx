@@ -33,6 +33,9 @@ export default function AboutPage() {
                             The secondary reason is personal: I wanted to <span className="font-semibold text-orange-600">deeply understand Next.js and PostgreSQL</span> by building a real full-stack project. 
                             Unlike my previous three semi full-stack projects using React + Firebase, Veroca allowed me to implement a complete, real-world full-stack workflow.
                         </BaseText>
+                        <BaseText className="mt-2 text-gray-700">
+                            Another reason for creating Veroca was to <span className="font-semibold text-orange-600">officially become a full-stack developer before 2026</span> by completing a professional full-stack project end-to-end.
+                        </BaseText>
                     </div>
 
                     <div className="bg-white p-6 rounded-lg shadow border border-gray-200">

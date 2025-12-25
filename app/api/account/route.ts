@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 // import { handleQuery } from "@/utils/qr-helper";
 // import { dev } from "@/utils/dev-log";
 
-export async function POST(req: NextRequest) {
+export async function DELETE(req: NextRequest) {
 //   return handleQuery(
 //     async () => {
 //       const sessionToken = req.cookies.get("session_token")?.value;

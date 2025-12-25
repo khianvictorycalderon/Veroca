@@ -31,6 +31,14 @@ Log in to your account (Register if no account yet), and manage your customer's 
         ip_address TEXT
     );
 
+    CREATE TABLE IF NOT EXISTS orders (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        name TEXT NOT NULL,
+        customers JSONB NOT NULL DEFAULT '[]',
+        created_at TIMESTAMP DEFAULT NOW(),
+        updated_at TIMESTAMP DEFAULT NOW()
+    );
     ```
 4. Create `.env.local` that contains the following:
     ```env

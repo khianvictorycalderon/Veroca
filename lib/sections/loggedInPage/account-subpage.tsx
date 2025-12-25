@@ -282,6 +282,10 @@ export default function AccountSubPage() {
                     </div>
                 </div>
 
+                <div className="w-full">
+                    <HeadingText className="text-center text-neutral-800">Account Deletion</HeadingText>
+                </div>
+
             </SectionContainer>
 
             <GeneralFooter/>

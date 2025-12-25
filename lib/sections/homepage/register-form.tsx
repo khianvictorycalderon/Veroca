@@ -129,6 +129,11 @@ export default function RegisterForm({
         },
     ];
 
+    const handlePopUpOnClose = () => {
+        setPopUpMessage(false);
+        window.location.reload();
+    }
+
     return (
         <SectionContainer>
 
@@ -136,7 +141,7 @@ export default function RegisterForm({
             {popUpMessage && (
                 <MessagePopUp
                     message={popUpMessage}
-                    onClose={() => window.location.reload()}
+                    onClose={handlePopUpOnClose}
                 />
             )}
 

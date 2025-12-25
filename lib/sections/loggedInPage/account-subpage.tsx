@@ -167,33 +167,34 @@ export default function AccountSubPage() {
 
     // ---------------------------------------------------------
     // Account Deletion
-    const [deleteAccountInput, setDeleteAccountInput] = useState<string>("");
     const [isDeleteAccountPopUpShown, setIsDeleteAccountPopUpShown] = useState<boolean>(false);
     const [deleteAccountErrorMessage, setDeleteAccountErrorMessage] = useState<string>("");
     const [isDeletingAccount, setIsDeletingAccount] = useState<boolean>(false);
 
-    const handleOnCloseDeleteAccountPopUp = async () => {
-
+    const handleOnCloseDeleteAccountPopUp = async (input: string) => {
+        setDeleteAccountErrorMessage(""); // Clear previous error
         setIsDeleteAccountPopUpShown(false);
-        setIsDeletingAccount(true);
-        
-        if (deleteAccountInput == "delete my account") {
+
+        if (input === "delete my account") {
+            setIsDeletingAccount(true);
+
             await handleAPIRequest(
                 async () => {
                     await axios.delete("/api/account");
-                    window.location.reload(); // Force a page reload
+                    window.location.reload();
                 },
                 "Failed to delete account",
-                setDeleteAccountErrorMessage, // optional setState for error handling
-                async () => {}, // optional errAction
+                setDeleteAccountErrorMessage,
+                async () => {}, // optional error action
                 async () => {
-                    setIsDeletingAccount(false)
+                    setIsDeletingAccount(false);
                 }
             );
+        } else {
+            setDeleteAccountErrorMessage("Unable to delete account: Please type properly");
         }
+    };
 
-        setDeleteAccountInput("")
-    }
     // ---------------------------------------------------------
 
     return (
@@ -205,9 +206,8 @@ export default function AccountSubPage() {
                         <br/>
                         <span className="italic text-sm text-gray-600">WARNING: Account cannot be restored once deleted.</span>
                     </>}
-                    value={deleteAccountInput}
-                    setValue={setDeleteAccountInput}
-                    onClose={handleOnCloseDeleteAccountPopUp}
+                    onCancel={() => setIsDeleteAccountPopUpShown(false)}
+                    onConfirm={handleOnCloseDeleteAccountPopUp}
                 />
             )}
 
@@ -331,7 +331,7 @@ export default function AccountSubPage() {
                         <button 
                             disabled={isDeletingAccount}
                             onClick={() => setIsDeleteAccountPopUpShown(true)} 
-                            className="w-full px-6 py-2 bg-red-600 hover:bg-red-500 text-white font-bold mt-6 rounded-md shadow transition duration-300 cursor-pointer">
+                            className="disabled:cursor-not-allowed disabled:!text-neutral-400 disabled:!bg-gray-300 w-full px-6 py-2 bg-red-600 hover:bg-red-500 text-white font-bold mt-6 rounded-md shadow transition duration-300 cursor-pointer">
                             Delete my Account
                         </button>
                         {deleteAccountErrorMessage && <BaseText className="text-red-600 text-center mt-2">{deleteAccountErrorMessage}</BaseText>}

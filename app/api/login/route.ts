@@ -6,15 +6,15 @@ import { dev } from "@/utils/dev-log";
 import crypto from "crypto";
 
 // Trying to login
-export async function POST(request: NextRequest) {
-  const { username, password } = await request.json();
+export async function POST(req: NextRequest) {
+  const { username, password } = await req.json();
 
   // For debugging purpose
   dev.log(`Username: ${username}`);
   dev.log(`Password: ${password}`);
 
   // Duration of a session
-  const maxDuration = 60 * 60 * 6;
+  const maxDuration = 60 * 60 * 6; // Max of 6 hours per login session
 
   return handleQuery(
     async () => {
@@ -49,10 +49,15 @@ export async function POST(request: NextRequest) {
       const expiresAt = new Date();
       expiresAt.setSeconds(expiresAt.getSeconds() + maxDuration);
 
+      // Get user IP and user agent
+      const ipAddress =
+        req.headers.get("x-forwarded-for")?.split(",")[0] || "unknown";
+      const userAgent = req.headers.get("user-agent") || "unknown";
+
       await pool.query(
-        `INSERT INTO user_sessions (user_id, session_token, expires_at)
-         VALUES ($1, $2, $3)`,
-        [user.id, sessionToken, expiresAt]
+        `INSERT INTO user_sessions (user_id, session_token, expires_at, ip_address, user_agent)
+         VALUES ($1, $2, $3, $4, $5)`,
+        [user.id, sessionToken, expiresAt, ipAddress, userAgent]
       );
 
       // Step 4: Set HTTP-only cookie with session token
@@ -66,6 +71,8 @@ export async function POST(request: NextRequest) {
         secure: process.env.NODE_ENV === "production",
         maxAge: maxDuration
       });
+
+      dev.log(`Success: Created session for user ${user.id}, IP: ${ipAddress}, UA: ${userAgent}`);
 
       return response;
     },

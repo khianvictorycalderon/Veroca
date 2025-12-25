@@ -10,7 +10,7 @@ export default function GeneralNavbar() {
 
   const buttonsClassName = "font-semibold transition duration-300 hover:bg-orange-600";
 
-  const [navbarBG, setNavbarBG] = useState<string>("");
+  const [navbarBG, setNavbarBG] = useState<string>("bg-amber-500");
   useOnScrollAt(
     "homepage-hero-section",
     () => setNavbarBG("bg-transparent"), // If hero section is visible, then background must be transparent

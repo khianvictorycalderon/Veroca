@@ -4,14 +4,17 @@ import { MessagePopUp } from "@/lib/components/pop-up";
 import { BaseText, HeadingText } from "@/lib/components/typography";
 import { OrderManagementOrderListProps } from "@/lib/interfaces";
 import { useEffect, useRef, useState } from "react";
+import { MdEdit } from "react-icons/md";
 import { TiDelete } from "react-icons/ti";
 
 export default function OrderSubPage() {
     const [popUpMessage, setPopUpMessage] = useState<string>("");
 
     // ----------------------------------------------------------
-    // Order list/view part
+    // Order list/view and edit part
     const [searchOrderInput, setSearchOrderInput] = useState<string>("");
+    const [editingOrderId, setEditingOrderId] = useState<string | null>(null);
+    const [editedOrderName, setEditedOrderName] = useState<string>("");
 
     // Sample only, actual implementation later (Fetched from back-end)
     const [orderItems, setOrderItems] = useState<OrderManagementOrderListProps[]>([
@@ -209,30 +212,90 @@ export default function OrderSubPage() {
                             <div className="flex flex-col gap-2">
                                 {filteredOrders.map((item, index) => {
                                     const isSelected = currentSelectedOrder?.id === item.id;
+                                    const isEditing = editingOrderId === item.id;
+
                                     return (
                                         <div
                                             key={`${item.name}-${index}`}
                                             className={`flex justify-between items-center rounded-md transition duration-300 z-10
                                                 ${isSelected ? "bg-orange-500 text-white" : "hover:bg-gray-600"}`}
                                         >
-                                            <button
-                                                onClick={() => setCurrentSelectedOrder(item)}
-                                                className="text-left flex-1 cursor-pointer py-2 px-2 w-full"
-                                            >
-                                                {truncateText(item.name, 35)}
-                                            </button>
-                                            <button
-                                                onClick={() => {
-                                                    setOrderItems(prev => prev.filter(order => order.id !== item.id));
-                                                    if (currentSelectedOrder?.id === item.id) {
-                                                        setCurrentSelectedOrder(null);
-                                                        setCurrentCustomers([]);
-                                                    }
-                                                }}
-                                                className="ml-2 text-red-500 hover:text-red-700 cursor-pointer z-40"
-                                            >
-                                                <TiDelete size={24} />
-                                            </button>
+                                            {!isEditing && (
+                                                <button
+                                                    onClick={() => setCurrentSelectedOrder(item)}
+                                                    className="text-left flex-1 cursor-pointer py-2 px-2 w-full"
+                                                >
+                                                    {truncateText(item.name, 35)}
+                                                </button>
+                                            )}
+
+                                            {isEditing ? (
+                                                <div className="flex w-full">
+                                                    <input
+                                                        value={editedOrderName}
+                                                        onChange={(e) => setEditedOrderName(e.target.value)}
+                                                        className="px-2 py-2 border border-gray-300 bg-neutral-800"
+                                                    />
+                                                    <button
+                                                        onClick={() => {
+                                                            if (editedOrderName.trim() === "") {
+                                                                setPopUpMessage("Order name cannot be empty.");
+                                                                return;
+                                                            }
+                                                            // Update orderItems
+                                                            setOrderItems(prev =>
+                                                                prev.map(order =>
+                                                                    order.id === item.id
+                                                                        ? { ...order, name: editedOrderName }
+                                                                        : order
+                                                                )
+                                                            );
+
+                                                            // Update currentSelectedOrder if necessary
+                                                            if (currentSelectedOrder?.id === item.id) {
+                                                                setCurrentSelectedOrder(prev => prev ? { ...prev, name: editedOrderName } : prev);
+                                                            }
+
+                                                            setEditingOrderId(null);
+                                                        }}
+                                                        className="bg-green-600 hover:bg-green-800 w-full px-2 cursor-pointer"
+                                                    >
+                                                        Save
+                                                    </button>
+                                                    <button
+                                                        onClick={() => setEditingOrderId(null)}
+                                                        className="bg-red-600 hover:bg-red-800 w-full px-2 cursor-pointer"
+                                                    >
+                                                        Cancel
+                                                    </button>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    <button
+                                                        title="Edit order name"
+                                                        className="ml-2 text-blue-500 hover:text-blue-700 cursor-pointer z-40"
+                                                        onClick={() => {
+                                                            setEditingOrderId(item.id);
+                                                            setEditedOrderName(item.name);
+                                                        }}
+                                                    >
+                                                        <MdEdit size={24} />
+                                                    </button>
+                                                    <button
+                                                        title="Delete order"
+                                                        onClick={() => {
+                                                            setOrderItems(prev => prev.filter(order => order.id !== item.id));
+                                                            if (currentSelectedOrder?.id === item.id) {
+                                                                setCurrentSelectedOrder(null);
+                                                                setCurrentCustomers([]);
+                                                            }
+                                                        }}
+                                                        className="ml-2 text-red-500 hover:text-red-700 cursor-pointer z-40"
+                                                    >
+                                                        <TiDelete size={24} />
+                                                    </button>
+                                                </>
+                                            )}
                                         </div>
                                     );
                                 })}

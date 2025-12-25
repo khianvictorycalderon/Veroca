@@ -2,7 +2,7 @@
 
 import { MessagePopUp } from "@/lib/components/pop-up";
 import { BaseText, HeadingText } from "@/lib/components/typography";
-import { OrderManagementCustomerRefs, OrderManagementOrderListProps } from "@/lib/interfaces";
+import { OrderManagementOrderListProps } from "@/lib/interfaces";
 import { useEffect, useRef, useState } from "react";
 import { TiDelete } from "react-icons/ti";
 

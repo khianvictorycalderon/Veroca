@@ -59,7 +59,7 @@ export default function PrivacyPolicyPage() {
             <GeneralNavbar/>
 
             <SectionContainer className="bg-gray-50 min-h-[100vh] py-16 mt-8">
-                <div className="max-w-4xl mx-auto flex flex-col gap-12">
+                <div className="max-w-4xl mx-auto flex flex-col gap-12 text-justify">
 
                     <HeadingText className="text-center text-neutral-800">Privacy Policy</HeadingText>
                     <BaseText className="text-center text-gray-600 italic">

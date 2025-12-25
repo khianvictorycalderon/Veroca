@@ -169,13 +169,27 @@ export default function AccountSubPage() {
     // Account Deletion
     const [deleteAccountInput, setDeleteAccountInput] = useState<string>("");
     const [isDeleteAccountPopUpShown, setIsDeleteAccountPopUpShown] = useState<boolean>(false);
-    
-    const handleOnCloseDeleteAccountPopUp = () => {
-        
+    const [deleteAccountErrorMessage, setDeleteAccountErrorMessage] = useState<string>("");
+    const [isDeletingAccount, setIsDeletingAccount] = useState<boolean>(false);
+
+    const handleOnCloseDeleteAccountPopUp = async () => {
+
         setIsDeleteAccountPopUpShown(false);
+        setIsDeletingAccount(true);
         
         if (deleteAccountInput == "delete my account") {
-            alert("Account deleted!");
+            await handleAPIRequest(
+                async () => {
+                    await axios.delete("/api/account");
+                    window.location.reload(); // Force a page reload
+                },
+                "Failed to delete account",
+                setDeleteAccountErrorMessage, // optional setState for error handling
+                async () => {}, // optional errAction
+                async () => {
+                    setIsDeletingAccount(false)
+                }
+            );
         }
 
         setDeleteAccountInput("")
@@ -314,9 +328,13 @@ export default function AccountSubPage() {
 
                     <div className="w-full">
                         <HeadingText className="text-center text-neutral-800">Account Deletion</HeadingText>
-                        <button onClick={() => setIsDeleteAccountPopUpShown(true)} className="w-full px-6 py-2 bg-red-600 hover:bg-red-500 text-white font-bold mt-6 rounded-md shadow transition duration-300 cursor-pointer">
+                        <button 
+                            disabled={isDeletingAccount}
+                            onClick={() => setIsDeleteAccountPopUpShown(true)} 
+                            className="w-full px-6 py-2 bg-red-600 hover:bg-red-500 text-white font-bold mt-6 rounded-md shadow transition duration-300 cursor-pointer">
                             Delete my Account
                         </button>
+                        {deleteAccountErrorMessage && <BaseText className="text-red-600 text-center mt-2">{deleteAccountErrorMessage}</BaseText>}
                     </div>
 
                 </div>

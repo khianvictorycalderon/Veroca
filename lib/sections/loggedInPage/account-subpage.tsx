@@ -280,7 +280,6 @@ export default function AccountSubPage() {
                         {changePassErrorMessage && <BaseText className="text-red-600 text-center mt-2">{changePassErrorMessage}</BaseText>}
                         {changePassSuccessMessage && <BaseText className="text-green-600 text-center mt-2">{changePassSuccessMessage}</BaseText>}
                     </div>
-                    
                 </div>
 
             </SectionContainer>

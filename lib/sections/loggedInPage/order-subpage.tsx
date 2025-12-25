@@ -3,6 +3,8 @@
 import { MessagePopUp } from "@/lib/components/pop-up";
 import { BaseText, HeadingText } from "@/lib/components/typography";
 import { OrderManagementOrderListProps } from "@/lib/interfaces";
+import { handleAPIRequest } from "@/utils/req-helper";
+import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { TiDelete } from "react-icons/ti";
@@ -16,40 +18,31 @@ export default function OrderSubPage() {
     const [editingOrderId, setEditingOrderId] = useState<string | null>(null);
     const [editedOrderName, setEditedOrderName] = useState<string>("");
 
-    // Sample only, actual implementation later (Fetched from back-end)
-    const [orderItems, setOrderItems] = useState<OrderManagementOrderListProps[]>([
-        {
-            id: "ORD001",
-            name: "Pancake - Tomorrow",
-            customers: [
-                { customer_name: "John Doe", quantity: 2, remarks: "Extra syrup" },
-                { customer_name: "Jane Smith", quantity: 1, remarks: "No butter" },
-            ],
-        },
-        {
-            id: "ORD002",
-            name: "BBQ Stick - Next Week",
-            customers: [
-                { customer_name: "Mark Cruz", quantity: 10, remarks: "Spicy" },
-                { customer_name: "Anna Lopez", quantity: 5, remarks: "Medium heat" },
-            ],
-        },
-        {
-            id: "ORD003",
-            name: "Eggplant - 1/25/20",
-            customers: [
-                { customer_name: "Carlos Reyes", quantity: 3, remarks: "Grilled" },
-            ],
-        },
-        {
-            id: "ORD004",
-            name: "Chicken Adobo - Today",
-            customers: [
-                { customer_name: "Liza Fernandez", quantity: 2, remarks: "Less oil" },
-                { customer_name: "Paul Lim", quantity: 1, remarks: "Extra sauce" },
-            ],
-        }
-    ]);
+    const [isFetchingOrders, setIsFetchingOrders] = useState<boolean>(true);
+    const [orderItems, setOrderItems] = useState<OrderManagementOrderListProps[]>([]);
+
+    // We need to re-fetch this when a new order has been added because of the order ID, it is created on the database, not here
+    const fetchOrders = async () => {
+        setIsFetchingOrders(true);
+
+        return handleAPIRequest(
+            async() => {
+                const res = await axios.get("/api/orders");
+                setOrderItems(res.data.data);
+            },
+            "Failed to fetch orders",
+            setPopUpMessage,
+            async () => {},
+            async () => {
+                setIsFetchingOrders(false);
+            }
+        )
+    }
+
+    // Initial load
+    useEffect(() => {
+        fetchOrders();
+    },[]);
 
     const filteredOrders = orderItems
         .filter(order => order.name.includes(searchOrderInput)) // case-sensitive, partial match
@@ -208,100 +201,106 @@ export default function OrderSubPage() {
                     </div>
 
                     <div className="mt-8">
-                        {filteredOrders.length > 0 ? (
-                            <div className="flex flex-col gap-2">
-                                {filteredOrders.map((item, index) => {
-                                    const isSelected = currentSelectedOrder?.id === item.id;
-                                    const isEditing = editingOrderId === item.id;
-
-                                    return (
-                                        <div
-                                            key={`${item.name}-${index}`}
-                                            className={`flex justify-between items-center rounded-md transition duration-300 z-10
-                                                ${isSelected ? "bg-orange-500 text-white" : "hover:bg-gray-600"}`}
-                                        >
-                                            {!isEditing && (
-                                                <button
-                                                    onClick={() => setCurrentSelectedOrder(item)}
-                                                    className="text-left flex-1 cursor-pointer py-2 px-2 w-full"
-                                                >
-                                                    {truncateText(item.name, 35)}
-                                                </button>
-                                            )}
-
-                                            {isEditing ? (
-                                                <div className="flex w-full">
-                                                    <input
-                                                        value={editedOrderName}
-                                                        onChange={(e) => setEditedOrderName(e.target.value)}
-                                                        className="px-2 py-2 border border-gray-300 bg-neutral-800"
-                                                    />
-                                                    <button
-                                                        onClick={() => {
-                                                            if (editedOrderName.trim() === "") {
-                                                                setPopUpMessage("Order name cannot be empty.");
-                                                                return;
-                                                            }
-                                                            // Update orderItems
-                                                            setOrderItems(prev =>
-                                                                prev.map(order =>
-                                                                    order.id === item.id
-                                                                        ? { ...order, name: editedOrderName }
-                                                                        : order
-                                                                )
-                                                            );
-
-                                                            // Update currentSelectedOrder if necessary
-                                                            if (currentSelectedOrder?.id === item.id) {
-                                                                setCurrentSelectedOrder(prev => prev ? { ...prev, name: editedOrderName } : prev);
-                                                            }
-
-                                                            setEditingOrderId(null);
-                                                        }}
-                                                        className="bg-green-600 hover:bg-green-800 w-full px-2 cursor-pointer"
-                                                    >
-                                                        Save
-                                                    </button>
-                                                    <button
-                                                        onClick={() => setEditingOrderId(null)}
-                                                        className="bg-red-600 hover:bg-red-800 w-full px-2 cursor-pointer"
-                                                    >
-                                                        Cancel
-                                                    </button>
-                                                </div>
-                                            ) : (
-                                                <>
-                                                    <button
-                                                        title="Edit order name"
-                                                        className="ml-2 text-blue-500 hover:text-blue-700 cursor-pointer z-40"
-                                                        onClick={() => {
-                                                            setEditingOrderId(item.id);
-                                                            setEditedOrderName(item.name);
-                                                        }}
-                                                    >
-                                                        <MdEdit size={24} />
-                                                    </button>
-                                                    <button
-                                                        title="Delete order"
-                                                        onClick={() => {
-                                                            setOrderItems(prev => prev.filter(order => order.id !== item.id));
-                                                            if (currentSelectedOrder?.id === item.id) {
-                                                                setCurrentSelectedOrder(null);
-                                                                setCurrentCustomers([]);
-                                                            }
-                                                        }}
-                                                        className="ml-2 text-red-500 hover:text-red-700 cursor-pointer z-40"
-                                                    >
-                                                        <TiDelete size={24} />
-                                                    </button>
-                                                </>
-                                            )}
-                                        </div>
-                                    );
-                                })}
-                            </div>
+                        {isFetchingOrders ? (
+                            <BaseText className="text-center">Loading orders...</BaseText>
                         ) : (
-                            <BaseText className="text-center">No orders found.</BaseText>
+                            <>
+                                {filteredOrders.length > 0 ? (
+                                    <div className="flex flex-col gap-2">
+                                        {filteredOrders.map((item, index) => {
+                                            const isSelected = currentSelectedOrder?.id === item.id;
+                                            const isEditing = editingOrderId === item.id;
+
+                                            return (
+                                                <div
+                                                    key={`${item.name}-${index}`}
+                                                    className={`flex justify-between items-center rounded-md transition duration-300 z-10
+                                                        ${isSelected ? "bg-orange-500 text-white" : "hover:bg-gray-600"}`}
+                                                >
+                                                    {!isEditing && (
+                                                        <button
+                                                            onClick={() => setCurrentSelectedOrder(item)}
+                                                            className="text-left flex-1 cursor-pointer py-2 px-2 w-full"
+                                                        >
+                                                            {truncateText(item.name, 35)}
+                                                        </button>
+                                                    )}
+
+                                                    {isEditing ? (
+                                                        <div className="flex w-full">
+                                                            <input
+                                                                value={editedOrderName}
+                                                                onChange={(e) => setEditedOrderName(e.target.value)}
+                                                                className="px-2 py-2 border border-gray-300 bg-neutral-800"
+                                                            />
+                                                            <button
+                                                                onClick={() => {
+                                                                    if (editedOrderName.trim() === "") {
+                                                                        setPopUpMessage("Order name cannot be empty.");
+                                                                        return;
+                                                                    }
+                                                                    // Update orderItems
+                                                                    setOrderItems(prev =>
+                                                                        prev.map(order =>
+                                                                            order.id === item.id
+                                                                                ? { ...order, name: editedOrderName }
+                                                                                : order
+                                                                        )
+                                                                    );
+
+                                                                    // Update currentSelectedOrder if necessary
+                                                                    if (currentSelectedOrder?.id === item.id) {
+                                                                        setCurrentSelectedOrder(prev => prev ? { ...prev, name: editedOrderName } : prev);
+                                                                    }
+
+                                                                    setEditingOrderId(null);
+                                                                }}
+                                                                className="bg-green-600 hover:bg-green-800 w-full px-2 cursor-pointer"
+                                                            >
+                                                                Save
+                                                            </button>
+                                                            <button
+                                                                onClick={() => setEditingOrderId(null)}
+                                                                className="bg-red-600 hover:bg-red-800 w-full px-2 cursor-pointer"
+                                                            >
+                                                                Cancel
+                                                            </button>
+                                                        </div>
+                                                    ) : (
+                                                        <>
+                                                            <button
+                                                                title="Edit order name"
+                                                                className="ml-2 text-blue-500 hover:text-blue-700 cursor-pointer z-40"
+                                                                onClick={() => {
+                                                                    setEditingOrderId(item.id);
+                                                                    setEditedOrderName(item.name);
+                                                                }}
+                                                            >
+                                                                <MdEdit size={24} />
+                                                            </button>
+                                                            <button
+                                                                title="Delete order"
+                                                                onClick={() => {
+                                                                    setOrderItems(prev => prev.filter(order => order.id !== item.id));
+                                                                    if (currentSelectedOrder?.id === item.id) {
+                                                                        setCurrentSelectedOrder(null);
+                                                                        setCurrentCustomers([]);
+                                                                    }
+                                                                }}
+                                                                className="ml-2 text-red-500 hover:text-red-700 cursor-pointer z-40"
+                                                            >
+                                                                <TiDelete size={24} />
+                                                            </button>
+                                                        </>
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                ) : (
+                                    <BaseText className="text-center">No orders found.</BaseText>
+                                )}
+                            </>
                         )}
                     </div>
 
